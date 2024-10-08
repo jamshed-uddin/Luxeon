@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Navbar from "@/components/Navbar";
 import { jost, lexendDeca, oswald } from "@/components/font";
+import CartProvider from "@/providers/CartProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,10 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jost.className} antialiased max-w-7xl mx-auto`}>
-        <Navbar />
-        <main>{children}</main>
-      </body>
+      <CartProvider>
+        <body
+          className={`${jost.className} antialiased max-w-7xl mx-auto bg-white`}
+        >
+          <Navbar />
+          <main>{children}</main>
+        </body>
+      </CartProvider>
     </html>
   );
 }

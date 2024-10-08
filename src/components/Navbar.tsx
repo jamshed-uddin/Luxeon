@@ -3,6 +3,7 @@ import React from "react";
 import { auth } from "@/auth";
 
 import { ShoppingCartIcon, UserIcon } from "@heroicons/react/24/outline";
+import CartIcon from "./CartIcon";
 const Navbar = async () => {
   const session = await auth();
 
@@ -19,7 +20,7 @@ const Navbar = async () => {
             <Link href={"/products"}>Products</Link>
           </li>
           <li>
-            <ShoppingCartIcon className="w-5 h-5" />
+            <CartIcon />
           </li>
           <li>
             <Link href={session?.user ? "/dashboard" : "/signin"}>

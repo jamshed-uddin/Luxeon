@@ -3,10 +3,31 @@
 import React, { useState } from "react";
 import Button from "../Button";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 
 const AddToCartOrBuy = ({ id }: { id: string }) => {
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const handleAddToCart = async () => {
+    setLoading(true);
+    const response = await fetch("http://localhost:4000/api/cart", {
+      method: "POST",
+      body: JSON.stringify({ productId: id, quantity }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      setLoading(false);
+
+      console.log(response);
+    }
+    const data = await response.json();
+    console.log(data);
+    setLoading(false);
+  };
+
   return (
     <div className="space-y-7">
       <div className="flex">
@@ -30,7 +51,9 @@ const AddToCartOrBuy = ({ id }: { id: string }) => {
         </div>
       </div>
       <div className="space-y-3">
-        <Button>Add to cart</Button>
+        <Button disabled={loading} loading={loading} onClick={handleAddToCart}>
+          Add to cart
+        </Button>
       </div>
     </div>
   );

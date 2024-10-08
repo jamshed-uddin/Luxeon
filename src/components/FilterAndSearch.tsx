@@ -44,7 +44,6 @@ const FilterAndSearch = () => {
   };
 
   const handleSetInStock = (value: boolean | string) => {
-    console.log(typeof value);
     const params = new URLSearchParams(searchParams);
 
     if (value) {

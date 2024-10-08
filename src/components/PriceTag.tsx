@@ -6,7 +6,6 @@ interface PriceTagProps {
 }
 
 const PriceTag = ({ price, className }: PriceTagProps) => {
-  console.log(price);
   const format = () => {
     return (price / 100).toLocaleString("en-US", {
       style: "currency",

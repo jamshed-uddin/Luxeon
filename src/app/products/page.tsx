@@ -28,8 +28,6 @@ const Products = async ({
     return <div>loading...</div>;
   }
 
-  console.log(products);
-
   return (
     <div className="my-container">
       <FilterAndSearch />
