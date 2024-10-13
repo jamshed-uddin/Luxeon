@@ -1,7 +1,6 @@
 "use client";
-import ErrorElement from "@/components/ErrorElement";
 
-// Error boundaries must be Client Components
+import ErrorElement from "@/components/ErrorElement";
 
 export default function Error({
   error,

@@ -3,29 +3,23 @@
 import React, { useState } from "react";
 import Button from "../Button";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { useCart } from "@/providers/CartProvider";
 
 const AddToCartOrBuy = ({ id }: { id: string }) => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
+  const { addToCart } = useCart();
 
   const handleAddToCart = async () => {
-    setLoading(true);
-    const response = await fetch("http://localhost:4000/api/cart", {
-      method: "POST",
-      body: JSON.stringify({ productId: id, quantity }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
+    try {
+      setLoading(true);
+      const res = await addToCart({ productId: id, quantity });
+      console.log(res);
       setLoading(false);
-
-      console.log(response);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
     }
-    const data = await response.json();
-    console.log(data);
-    setLoading(false);
   };
 
   return (

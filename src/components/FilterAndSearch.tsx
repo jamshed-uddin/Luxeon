@@ -32,11 +32,16 @@ const FilterAndSearch = () => {
     //for sort select
     else if (name === "sort") {
       if (value) {
-        setQueries((prev) => ({ ...prev, sort: value }));
-        params.set("sort", value);
+        const splittedValue = value?.split("-");
+        const sortBy = splittedValue[0];
+        const order = splittedValue[1];
+        setQueries((prev) => ({ ...prev, sort: sortBy }));
+        params.set("sort", sortBy);
+        params.set("order", order === "asc" ? "asc" : "desc");
       } else {
         setQueries((prev) => ({ ...prev, sort: "" }));
         params.delete("sort");
+        params.delete("order");
       }
     }
 
@@ -89,13 +94,16 @@ const FilterAndSearch = () => {
           name="sort"
           id=""
           className="border rounded-xl py-1 px-3 focus:outline-none appearance-none cursor-pointer "
-          defaultValue={searchParams.get("sort")?.toString()}
+          defaultValue={`${searchParams.get("sort")?.toString()}-${searchParams
+            .get("order")
+            ?.toString()}`}
           onChange={handleSelectValue}
         >
           <option value="">Sort by</option>
-          <option value="title">Alphabetical order</option>
-          <option value="price">Price</option>
-          <option value="createdAt">Date created</option>
+          <option value="title-asc">Alphabetical order, A-Z</option>
+          <option value="title-desc">Alphabetical order, Z-A</option>
+          <option value="price-asc">Price, Low to high</option>
+          <option value="price-desc">Price, High to low</option>
         </select>
 
         <div className="flex gap-2 items-center border rounded-xl py-1 px-3 cursor-pointer">

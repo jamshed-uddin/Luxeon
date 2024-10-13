@@ -1,9 +1,9 @@
 export type Pagination = {
-  page?: number;
-  limit?: number;
-  totalPages?: number;
-  totalProducts?: number;
-  hasMore?: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  totalProducts: number;
+  hasMore: number;
 };
 
 export type ProductDetails = {

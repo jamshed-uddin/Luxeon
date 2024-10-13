@@ -7,11 +7,9 @@ const shimmer = `
 
 export const CardSkeleton = () => {
   return (
-    <div
-      className={`${shimmer} h-[23rem] w-full  bg-gray-100 p-1 rounded-xl shadow-sm`}
-    >
-      <div className={`h-4/5 w-full rounded-t-xl bg-gray-50`}></div>
-      <div className="mt-4 space-y-2">
+    <div className={`${shimmer} h-[23rem] w-full  bg-gray-100   shadow-sm`}>
+      <div className={`h-4/5 w-full  bg-gray-50`}></div>
+      <div className="mt-4 space-y-2 p-2">
         <h2 className={`bg-gray-50 w-3/4 h-4 `}></h2>
         <h2 className={`bg-gray-50 w-1/2 h-4`}></h2>
       </div>
@@ -36,7 +34,7 @@ export const ProductDetailSkeleton = () => {
 
 const CardsSkeleton = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-2">
       <CardSkeleton />
       <CardSkeleton />
       <CardSkeleton />

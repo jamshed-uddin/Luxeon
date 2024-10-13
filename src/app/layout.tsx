@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import Navbar from "@/components/Navbar";
-import { jost, lexendDeca, oswald } from "@/components/font";
+import { jost } from "@/components/font";
 import CartProvider from "@/providers/CartProvider";
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default function RootLayout({
           className={`${jost.className} antialiased max-w-7xl mx-auto bg-white`}
         >
           <Navbar />
-          <main>{children}</main>
+          <main className="my-10">{children}</main>
         </body>
       </CartProvider>
     </html>
