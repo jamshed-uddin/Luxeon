@@ -24,10 +24,7 @@ const CartProvider = ({
 }: {
   children: React.ReactNode;
 }): React.ReactNode => {
-  const cart = useSWR(
-    "http://localhost:4000/api/cart/6703c4302e2e4880d0d7dfe2",
-    fetchCart
-  );
+  const cart = useSWR("http://localhost:4000/api/cart", fetchCart);
 
   const addToCart = async ({
     productId,
@@ -37,10 +34,14 @@ const CartProvider = ({
     quantity: number;
   }): Promise<Cart> => {
     try {
-      const response = await axios.post("http://localhost:4000/api/cart", {
-        productId,
-        quantity,
-      });
+      const response = await axios.post(
+        "http://localhost:4000/api/cart",
+        {
+          productId,
+          quantity,
+        },
+        { withCredentials: true }
+      );
 
       return response.data;
     } catch (error) {

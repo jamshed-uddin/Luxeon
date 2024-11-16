@@ -1,28 +1,24 @@
 import FilterAndSearch from "@/components/FilterAndSearch";
 import Pagination from "@/components/Pagination";
 import ProductCard from "@/components/products/ProductCard";
-import CardsSkeleton, { CardSkeleton } from "@/components/Skeletons";
-import { Products } from "@/lib/definition";
+
+import { getProducts } from "@/lib/getProducts";
 
 import React from "react";
 
-const Products = async ({
-  searchParams,
-}: {
-  searchParams?: {
-    q?: string;
-    page?: string;
-    category?: string;
-    sort?: string;
-    order?: string;
-    inStock?: string;
-  };
-}) => {
-  const url = new URLSearchParams(searchParams).toString();
-
-  console.log("params", searchParams);
-  console.log("url", url);
-
+const Products = async (
+  props: {
+    searchParams?: Promise<{
+      q?: string;
+      page?: string;
+      category?: string;
+      sort?: string;
+      order?: string;
+      inStock?: string;
+    }>;
+  }
+) => {
+  const searchParams = await props.searchParams;
   const validQueries = ["q", "page", "category", "sort", "order", "inStock"];
 
   const validQueryParams = (
@@ -42,18 +38,9 @@ const Products = async ({
 
   const validParams = validQueryParams(searchParams, validQueries);
 
-  const res = await fetch(`http://localhost:4000/api/products?${validParams}`, {
-    headers: {
-      "Cache-Control": "no-cache",
-    },
-  });
-  if (!res.ok) {
-    throw new Error("Something went wrong!");
-  }
-
-  const products: Products = await res.json();
-
-  console.log(products);
+  const products = await getProducts(
+    `http://localhost:4000/api/products?${validParams}`
+  );
 
   return (
     <div className="my-container">

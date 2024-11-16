@@ -13,7 +13,7 @@ const ProductDescription = ({ description }: { description: string }) => {
 
       {description?.length > maxLength && (
         <button
-          className="font-medium text-base"
+          className="text-sm font-normal"
           onClick={() => setShowAll(!showAll)}
         >
           {showAll ? "Less" : "More"}

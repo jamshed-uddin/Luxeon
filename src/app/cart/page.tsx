@@ -7,7 +7,7 @@ import React from "react";
 
 const Cart = async () => {
   const { _id, items, totalItems, subtotal } = await fetchCart(
-    "http://localhost:4000/api/cart/6703c4302e2e4880d0d7dfe2"
+    "http://localhost:4000/api/cart"
   );
 
   return (

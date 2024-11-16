@@ -8,14 +8,14 @@ const Navbar = async () => {
   const session = await auth();
 
   return (
-    <nav className="flex justify-between items-center py-2 my-container ">
+    <nav className="flex justify-between items-center py-2 my-container fixed top-0 left-0 right-0 z-20 mix-blend-difference text-white">
       <div>
         <Link href={"/"} className="text-3xl font-semibold">
           Luxeon
         </Link>
       </div>
       <div>
-        <ul className="flex items-center gap-4 text-lg">
+        <ul className="flex items-center gap-4 text-lg ">
           <li>
             <Link href={"/products"}>Products</Link>
           </li>

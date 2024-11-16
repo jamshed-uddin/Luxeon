@@ -1,3 +1,5 @@
+import { ReactElement, ReactNode } from "react";
+
 export type Pagination = {
   page: number;
   limit: number;
@@ -11,14 +13,19 @@ export type ProductDetails = {
   value: string;
 };
 
+export type PhotoUrlObj = {
+  url: string;
+  publicId: string;
+};
+
 export type Product = {
-  _id: string;
+  _id?: string;
   title: string;
-  photoUrl: string[];
-  description?: string;
-  price: number;
+  photoUrl: PhotoUrlObj[];
+  description: string;
+  price: number | string;
   category: string;
-  inStock: number;
+  stock: number | string;
   details?: ProductDetails[];
   createdAt?: Date;
   updatedAt?: Date;
@@ -65,4 +72,11 @@ export type Cart = {
   subtotal: number;
   createdAt?: Date;
   updatedAt?: Date;
+};
+
+export type ColumnCell<T> = {
+  headerName: string;
+  field: keyof T | "action" | "avatar";
+  width?: number;
+  renderCell?: (row: T) => JSX.Element;
 };

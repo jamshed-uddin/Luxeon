@@ -1,8 +1,8 @@
 import clsx from "clsx";
-import React, { ReactNode } from "react";
+import React, { ReactElement, ReactNode } from "react";
 
 interface ButtonProps {
-  children: ReactNode;
+  children: ReactNode | ReactElement;
   className?: string;
   onClick?: () => void;
   disabled?: boolean;
@@ -20,17 +20,18 @@ const Button = ({
   return (
     <button
       className={clsx(
-        "relative h-14 w-full text-xl overflow-hidden ",
-        className,
+        "relative h-14 w-full text-xl overflow-hidden text-nowrap",
+
         {
           "border border-black px-6 py-3  rounded-3xl": variant === "bordered",
-        }
+        },
+        className
       )}
       {...props}
     >
       <span
         className={clsx(
-          "absolute inset-0 flex items-center justify-center transition-transform duration-500",
+          "absolute inset-0 flex  items-center justify-center transition-transform duration-500",
           {
             "translate-y-0": !loading,
             "-translate-y-14": loading,

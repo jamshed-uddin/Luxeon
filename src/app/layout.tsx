@@ -23,7 +23,7 @@ export default function RootLayout({
           className={`${jost.className} antialiased max-w-7xl mx-auto bg-white`}
         >
           <Navbar />
-          <main className="my-10">{children}</main>
+          <main className="mt-16">{children}</main>
         </body>
       </CartProvider>
     </html>

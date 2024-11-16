@@ -88,7 +88,7 @@ const FilterAndSearch = () => {
           <option value="table">Table</option>
           <option value="chair">Chair</option>
           <option value="sofa">Sofa</option>
-          <option value="lights">Lights</option>
+          <option value="lighting">Lighting</option>
         </select>
         <select
           name="sort"

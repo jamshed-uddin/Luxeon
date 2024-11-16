@@ -1,27 +1,13 @@
-import Button from "@/components/Button";
 import PriceTag from "@/components/PriceTag";
 import AddToCartOrBuy from "@/components/products/AddToCartOrBuy";
 import ProductDescription from "@/components/products/ProductDescription";
+import { getProductData } from "@/lib/getProductData";
 import Image from "next/image";
 import React from "react";
 
-const getData = async (id: string) => {
-  try {
-    const res = await fetch(`http://localhost:4000/api/products/${id}`);
-
-    if (!res.ok) {
-      throw new Error("Something went wrong!");
-    }
-
-    const product = await res.json();
-    return product;
-  } catch (error) {
-    throw new Error("Something went wrong!");
-  }
-};
-
-const ProductDetail = async ({ params }: { params: { id: string } }) => {
-  const { title, photoUrl, price, description, details } = await getData(
+const ProductDetail = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
+  const { title, photoUrl, price, description, details } = await getProductData(
     params.id
   );
 
@@ -34,9 +20,10 @@ const ProductDetail = async ({ params }: { params: { id: string } }) => {
           <Image
             height={400}
             width={400}
-            src={photoUrl[0]}
+            src={photoUrl[0].url}
             alt={title}
             className="w-full h-full object-cover"
+            priority
           />
         </div>
         {/* product title , price, add to cart btn */}
@@ -51,7 +38,7 @@ const ProductDetail = async ({ params }: { params: { id: string } }) => {
         </div>
         <div className=" w-full lg:col-span-4  text-lg">
           {/* description */}
-          <h2 className="text-2xl font-medium mb-4">More detail</h2>
+          <h2 className="text-2xl font-medium mb-4">Product detail</h2>
 
           {/* more details */}
           <div className="mt-4 ">
