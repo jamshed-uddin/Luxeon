@@ -5,10 +5,10 @@ import React from "react";
 
 const Signin = async () => {
   return (
-    <div className="w-full flex flex-col items-center space-y-4">
+    <div className="lg:w-1/4 mx-auto  space-y-4 ">
       <SigninForm />
 
-      <div>Or, continue with</div>
+      <div className="text-center">Or, continue with</div>
       <SocialLogin />
 
       <div>

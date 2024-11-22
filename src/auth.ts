@@ -1,3 +1,4 @@
+import axios, { AxiosError } from "axios";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
@@ -10,29 +11,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google,
     Credentials({
       authorize: async (credentials) => {
-        try {
-          const res = await fetch("http://localhost:4000/api/users/login", {
-            method: "POST",
-            body: JSON.stringify(credentials),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+        const { data: user } = await axios.post(
+          "http://localhost:4000/api/users/login",
+          credentials
+        );
+        console.log("auth ts response", user);
 
-          if (!res.ok) {
-            throw new Error("Failed to fetch");
-          }
-
-          const user = await res.json();
-
-          if (!user) {
-            throw new Error("User not found.");
-          }
-
-          return user;
-        } catch (error) {
-          throw new Error((error as Error).message);
+        if (!user) {
+          return null;
         }
+
+        return user;
       },
     }),
   ],

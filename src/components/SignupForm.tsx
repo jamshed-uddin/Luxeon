@@ -1,8 +1,22 @@
 "use client";
 
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
+import Button from "./Button";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+
+const inputStyle =
+  "border-[1.2px] text-sm   border-gray-600 placeholder:text-gray-600 rounded-lg  focus:outline focus:outline-1 focus:outline-black p-1.5 w-full box-border";
+
+const labelStyle = " font-medium block mb-1";
 
 const SignupForm = () => {
+  const [error, setError] = useState<string>("");
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+
   const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -13,21 +27,26 @@ const SignupForm = () => {
       email: formData.get("email"),
       password: formData.get("password"),
     };
+    const confirmPassword = formData.get("confirmPassword");
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+    if (!userData.name) {
+      return setError("Name is required");
+    } else if (!userData.email) {
+      return setError("Email is required");
+    } else if (!emailRegex.test(String(userData.email))) {
+      return setError("Enter a valid email");
+    } else if (!userData.password) {
+      return setError("Password is required");
+    } else if (userData.password !== confirmPassword) {
+      return setError("Passwords do not match");
+    } else if (String(userData.password).length < 6) {
+      return setError("Password length must be 6 or higher");
+    }
     try {
-      const response = await fetch("http://localhost:4000/api/users", {
-        method: "POST",
-        body: JSON.stringify(userData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await axios.post("http://localhost:4000/api/users", userData);
 
-      if (!response.ok) {
-        return console.log("something went wrong");
-      }
-
-      const data = await response.json();
+      console.log(res.data);
     } catch (error) {
       throw new Error((error as Error).message);
     }
@@ -35,33 +54,87 @@ const SignupForm = () => {
 
   return (
     <form onSubmit={handleSignup} className="space-y-3 ">
-      <input
-        type="text"
-        name="name"
-        className="border border-black p-2 rounded-xl"
-        placeholder="Name"
-        required
-      />{" "}
-      <br />
-      <input
-        type="text"
-        name="email"
-        className="border border-black p-2 rounded-xl"
-        placeholder="Email"
-        required
-      />{" "}
-      <br />
-      <input
-        type="password"
-        className="border border-black p-2 rounded-xl"
-        name="password"
-        placeholder="Password"
-        required
-      />{" "}
-      <br />
-      <button type="submit" className="border border-black rounded-xl p-2">
-        Sign up
-      </button>
+      <div>
+        <label className={labelStyle} htmlFor="name">
+          Name
+        </label>
+        <input
+          type="text"
+          name="name"
+          className={inputStyle}
+          placeholder="Name"
+        />
+      </div>
+      <div>
+        <label className={labelStyle} htmlFor="email">
+          Email
+        </label>
+        <input
+          type="text"
+          name="email"
+          className={inputStyle}
+          placeholder="Email"
+        />
+      </div>
+      <div>
+        <label className={labelStyle} htmlFor="password">
+          Password
+        </label>
+        <div className="relative">
+          <input
+            type={showPassword.password ? "text" : "password"}
+            name="password"
+            className={inputStyle}
+            placeholder="Password"
+          />
+          <span
+            onClick={() =>
+              setShowPassword((p) => ({ ...p, password: !p.password }))
+            }
+            className="cursor-pointer absolute right-2 top-1/2 -translate-y-1/2"
+          >
+            {showPassword.password ? (
+              <EyeIcon className="w-4" />
+            ) : (
+              <EyeSlashIcon className="w-4" />
+            )}
+          </span>
+        </div>
+      </div>
+      <div>
+        <label className={labelStyle} htmlFor="confirmPassword">
+          Confirm Password
+        </label>
+        <div className="relative">
+          <input
+            type={showPassword.confirmPassword ? "text" : "password"}
+            name="confirmPassword"
+            className={inputStyle}
+            placeholder="Confirm password"
+          />
+          <span
+            onClick={() =>
+              setShowPassword((p) => ({
+                ...p,
+                confirmPassword: !p.confirmPassword,
+              }))
+            }
+            className="cursor-pointer absolute right-2 top-1/2 -translate-y-1/2"
+          >
+            {showPassword.confirmPassword ? (
+              <EyeIcon className="w-4" />
+            ) : (
+              <EyeSlashIcon className="w-4" />
+            )}
+          </span>
+        </div>
+      </div>
+      {error && <span className="text-sm text-red-500">{error}</span>}
+      <div className="pt-3">
+        <Button type="submit" className="border border-black rounded-xl p-2">
+          Sign up
+        </Button>
+      </div>
     </form>
   );
 };

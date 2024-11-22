@@ -1,7 +1,6 @@
 import React from "react";
 import heroImage from "@/assets/luxeonheroimage.jpg";
 import Image from "next/image";
-import Button from "../Button";
 import Link from "next/link";
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 const Hero = () => {

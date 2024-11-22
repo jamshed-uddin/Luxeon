@@ -21,11 +21,6 @@ const links = [
   },
   { name: "Add product", href: "/dashboard/add-product", icon: PlusIcon },
   { name: "Orders", href: "/dashboard/orders", icon: PlusIcon },
-  {
-    name: "Transactions",
-    href: "/dashboard/transaction",
-    icon: DocumentCurrencyDollarIcon,
-  },
 ];
 
 const NavLinks = () => {

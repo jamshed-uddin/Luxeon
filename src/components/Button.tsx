@@ -20,7 +20,7 @@ const Button = ({
   return (
     <button
       className={clsx(
-        "relative h-14 w-full text-xl overflow-hidden text-nowrap",
+        "relative h-10 w-full text-lg overflow-hidden text-nowrap",
 
         {
           "border border-black px-6 py-3  rounded-3xl": variant === "bordered",
@@ -49,9 +49,9 @@ const Button = ({
           }
         )}
       >
-        <span className=" w-3 h-3 bg-black rounded-full animate-[pulse_0.75s_ease-in-out_infinite]"></span>
-        <span className=" w-3 h-3 bg-black rounded-full animate-[pulse_0.75s_ease-in-out_0.1s_infinite]"></span>
-        <span className=" w-3 h-3 bg-black rounded-full animate-[pulse_0.75s_ease-in-out_0.2s_infinite]"></span>
+        <span className=" w-2 h-2 bg-black rounded-full animate-[pulse_0.75s_ease-in-out_infinite]"></span>
+        <span className=" w-2 h-2 bg-black rounded-full animate-[pulse_0.75s_ease-in-out_0.1s_infinite]"></span>
+        <span className=" w-2 h-2 bg-black rounded-full animate-[pulse_0.75s_ease-in-out_0.2s_infinite]"></span>
       </span>
     </button>
   );

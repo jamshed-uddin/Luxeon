@@ -14,7 +14,7 @@ import {
 const categories = ["Chairs", "Stools", "Tables", "Sofa", "Lighting"];
 
 const inputStyle =
-  "border-[1.2px] text-sm   border-gray-600 placeholder:text-gray-600 rounded-lg  focus:outline-0 focus:outline-[1.2px] p-1.5 w-full ";
+  "border-[1.2px] text-sm   border-gray-600 placeholder:text-gray-600 rounded-lg  focus:outline focus:outline-1 focus:outline-black p-1.5 w-full ";
 
 const labelStyle = " font-medium block mb-1";
 

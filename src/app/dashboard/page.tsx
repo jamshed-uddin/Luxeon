@@ -1,7 +1,10 @@
-import { DashboardSkeleton } from "@/components/Skeletons";
+import { auth } from "@/auth";
 import React from "react";
 
-const Dashboard = () => {
+const Dashboard = async () => {
+  const session = await auth();
+  console.log(session);
+
   return <div>Overview</div>;
 };
 
