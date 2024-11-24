@@ -2,12 +2,14 @@
 
 import { AuthError } from "next-auth";
 import { signIn, signOut } from "./auth";
-import axios from "axios";
 
-export const doSocialLogin = async (formData: FormData) => {
+export const doSocialLogin = async (
+  redirectUrl: string,
+  formData: FormData
+) => {
   const action = formData.get("action")?.toString();
 
-  await signIn(action, { redirectTo: "/" });
+  await signIn(action, { redirectTo: redirectUrl || "/" });
 };
 
 export const signInWithEmailAndPassword = async (formData: FormData) => {
@@ -22,7 +24,7 @@ export const signInWithEmailAndPassword = async (formData: FormData) => {
 
     return {
       success: true,
-      message: "Signin successfull",
+      message: "Signin successful",
     };
   } catch (error) {
     if (error instanceof AuthError) {
@@ -56,6 +58,5 @@ export const signInWithEmailAndPassword = async (formData: FormData) => {
 };
 
 export const userSignOut = async () => {
-  console.log("hello logout");
   await signOut({ redirectTo: "/" });
 };

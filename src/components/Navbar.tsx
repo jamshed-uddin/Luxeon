@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { auth } from "@/auth";
 
-import { ShoppingCartIcon, UserIcon } from "@heroicons/react/24/outline";
+import { UserIcon } from "@heroicons/react/24/outline";
 import CartIcon from "./CartIcon";
 const Navbar = async () => {
   const session = await auth();

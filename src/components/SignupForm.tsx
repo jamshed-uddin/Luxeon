@@ -4,6 +4,9 @@ import React, { FormEvent, useState } from "react";
 import Button from "./Button";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { signInWithEmailAndPassword } from "@/actions";
 
 const inputStyle =
   "border-[1.2px] text-sm   border-gray-600 placeholder:text-gray-600 rounded-lg  focus:outline focus:outline-1 focus:outline-black p-1.5 w-full box-border";
@@ -11,11 +14,22 @@ const inputStyle =
 const labelStyle = " font-medium block mb-1";
 
 const SignupForm = () => {
+  const { data: session } = useSession();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+  const router = useRouter();
   const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState({
     password: false,
     confirmPassword: false,
   });
+  const [pending, setPending] = useState<boolean>(false);
+
+  console.log(callbackUrl);
+
+  const handleInputChange = () => {
+    setError("");
+  };
 
   const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,12 +57,20 @@ const SignupForm = () => {
     } else if (String(userData.password).length < 6) {
       return setError("Password length must be 6 or higher");
     }
-    try {
-      const res = await axios.post("http://localhost:4000/api/users", userData);
 
-      console.log(res.data);
+    const userCredentials = new FormData();
+    userCredentials.append("email", userData.email);
+    userCredentials.append("password", userData.password);
+
+    try {
+      setPending(true);
+      await axios.post("http://localhost:4000/api/users", userData);
+      await signInWithEmailAndPassword(userCredentials);
+      router.replace(callbackUrl || "/");
+      setPending(false);
     } catch (error) {
-      throw new Error((error as Error).message);
+      setPending(false);
+      setError("Something went wrong");
     }
   };
 
@@ -63,6 +85,7 @@ const SignupForm = () => {
           name="name"
           className={inputStyle}
           placeholder="Name"
+          onChange={handleInputChange}
         />
       </div>
       <div>
@@ -74,6 +97,7 @@ const SignupForm = () => {
           name="email"
           className={inputStyle}
           placeholder="Email"
+          onChange={handleInputChange}
         />
       </div>
       <div>
@@ -86,6 +110,7 @@ const SignupForm = () => {
             name="password"
             className={inputStyle}
             placeholder="Password"
+            onChange={handleInputChange}
           />
           <span
             onClick={() =>
@@ -111,6 +136,7 @@ const SignupForm = () => {
             name="confirmPassword"
             className={inputStyle}
             placeholder="Confirm password"
+            onChange={handleInputChange}
           />
           <span
             onClick={() =>
@@ -131,7 +157,12 @@ const SignupForm = () => {
       </div>
       {error && <span className="text-sm text-red-500">{error}</span>}
       <div className="pt-3">
-        <Button type="submit" className="border border-black rounded-xl p-2">
+        <Button
+          disabled={pending}
+          loading={pending}
+          type="submit"
+          className="border border-black rounded-xl p-2"
+        >
           Sign up
         </Button>
       </div>

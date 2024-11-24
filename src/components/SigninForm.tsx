@@ -1,9 +1,9 @@
 "use client";
 
 import { signInWithEmailAndPassword } from "@/actions";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-import React, { FormEvent, useActionState, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import Button from "./Button";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
@@ -14,12 +14,16 @@ const labelStyle = " font-medium block mb-1";
 
 const SigninForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const [error, setError] = useState<string>("");
   const [pending, setPending] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const handleInputChange = () => {
     setError("");
   };
+
+  console.log(callbackUrl);
 
   const submitForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,7 +48,7 @@ const SigninForm = () => {
         setPending(false);
         return setError(res?.message);
       }
-      router.push("/");
+      router.replace(callbackUrl || "/");
       setPending(false);
     } catch (error) {
       console.log(error);
@@ -79,6 +83,7 @@ const SigninForm = () => {
             name="password"
             className={inputStyle}
             placeholder="Password"
+            onChange={handleInputChange}
           />
           <span
             onClick={() => setShowPassword((p) => !p)}

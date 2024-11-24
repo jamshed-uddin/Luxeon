@@ -2,19 +2,24 @@
 
 import { userSignOut } from "@/actions";
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
-import React, { FormEvent } from "react";
+import React, { FormEvent, useTransition } from "react";
 
 const SignoutButton = () => {
+  const [pending, startTransition] = useTransition();
+
   const signoutUser = async (e: FormEvent) => {
     e.preventDefault();
-    await userSignOut();
+    startTransition(async () => {
+      await userSignOut();
+    });
   };
-
+  console.log("signout pending", pending);
   return (
     <form onSubmit={signoutUser}>
       <button
         type="submit"
-        className="flex h-[48px]  items-center justify-center gap-2 text-sm font-medium  hover:text-blue-600 lg:flex-none lg:justify-start cursor-pointer"
+        disabled={pending}
+        className="flex h-[48px]  items-center justify-center gap-2 text-sm font-medium  hover:text-blue-600 lg:flex-none lg:justify-start cursor-pointer disabled:opacity-70 disabled:cursor-wait"
       >
         <ArrowLeftStartOnRectangleIcon className="w-6" /> Sign out
       </button>

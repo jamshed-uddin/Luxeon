@@ -19,23 +19,6 @@ const Products = async (props: {
   const searchParams = await props.searchParams;
   const validQueries = ["q", "page", "category", "sort", "order", "inStock"];
 
-  async function test() {
-    "use server";
-
-    try {
-      throw new Error("hello there");
-    } catch (error) {
-      console.log("test error", error);
-    }
-    // return {
-    //   success: false,
-    //   message: "Something went wrong",
-    // };
-  }
-
-  // const res = await test();
-  // console.log("action ress", res);
-
   const validQueryParams = (
     searchParams: Record<string, string> = {},
     validQueries: string[]

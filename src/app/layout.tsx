@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
-
+import SessionProvider from "../providers/SessionProvider";
 import Navbar from "@/components/Navbar";
 import { jost } from "@/components/font";
 import CartProvider from "@/providers/CartProvider";
@@ -18,14 +18,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <CartProvider>
-        <body
-          className={`${jost.className} antialiased max-w-7xl mx-auto bg-white`}
-        >
-          <Navbar />
-          <main className="mt-16">{children}</main>
-        </body>
-      </CartProvider>
+      <SessionProvider>
+        <CartProvider>
+          <body
+            className={`${jost.className} antialiased max-w-7xl mx-auto bg-white`}
+          >
+            <Navbar />
+            <main className="mt-16">{children}</main>
+          </body>
+        </CartProvider>
+      </SessionProvider>
     </html>
   );
 }
