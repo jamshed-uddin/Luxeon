@@ -1,5 +1,3 @@
-import { ReactElement, ReactNode } from "react";
-
 export type Pagination = {
   page: number;
   limit: number;

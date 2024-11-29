@@ -1,17 +1,16 @@
 // export { auth as middleware } from "@/auth";
 
-import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { authConfig } from "./auth.config";
 import { auth } from "./auth";
 
-const publicRoutes = [
-  "/signin",
-  "/signup",
-  "/products",
-  "/api/auth/callback/google",
-  "/cart",
+const customerPrivateRoutes = ["/profile", "/profile/addresses", "/checkout"];
+
+const adminRoutes = [
+  "/dashboard",
+  "/dashboard/products",
+  "/dashboard/add-product",
+  "/dashboard/orders",
 ];
 
 // const { auth } = NextAuth(authConfig);
@@ -23,22 +22,34 @@ export default async function middleware(request: NextRequest) {
   const pathname = nextUrl.pathname;
 
   //   console.log("mid session", session?.user);
-  //   console.log("from mid", nextUrl);
-  //   console.log("url ", request.url);
+  console.log("from mid", nextUrl);
+  console.log("url ", request.url);
   //   if (pathname === "/dashboard") {
   //     return NextResponse.redirect(new URL("/", request.url));
   //   }
 
-  const isPublicRoute =
-    publicRoutes.find((route) => pathname.startsWith(route)) ||
-    pathname === "/";
-
+  const isCustomerRoute = customerPrivateRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+  const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
+  const isAdmin = session?.user.role.toLowerCase() === "admin";
   const isAuthenticated = !!session?.user;
   const loginUrl = new URL("/signin", request.url);
   loginUrl.searchParams.set("callbackUrl", request.url);
 
-  if (!isAuthenticated && !isPublicRoute) {
+  // if it's  customer protected route and not authenticated
+  if (!isAuthenticated && (isCustomerRoute || isAdminRoute)) {
     return NextResponse.redirect(loginUrl);
+  }
+
+  //when a authenticated customer tries to access admin route
+  if (isAuthenticated && !isAdmin && isAdminRoute) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  // when admin tries to access customer routes
+  if (isAdmin && isCustomerRoute) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();

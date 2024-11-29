@@ -1,9 +1,8 @@
 "use client";
 
-import { DocumentCurrencyDollarIcon } from "@heroicons/react/24/outline";
 import {
   CubeIcon,
-  CurrencyDollarIcon,
+  ShoppingBagIcon,
   HomeIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
@@ -20,7 +19,7 @@ const links = [
     icon: CubeIcon,
   },
   { name: "Add product", href: "/dashboard/add-product", icon: PlusIcon },
-  { name: "Orders", href: "/dashboard/orders", icon: PlusIcon },
+  { name: "Orders", href: "/dashboard/orders", icon: ShoppingBagIcon },
 ];
 
 const NavLinks = () => {
