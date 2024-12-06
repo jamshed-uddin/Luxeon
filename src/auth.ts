@@ -1,11 +1,15 @@
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import { authConfig } from "./auth.config";
+import { userSignup } from "./lib/userSignup";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
+  pages: {
+    error: "/signin",
+  },
   providers: [
     Google,
     Credentials({
@@ -26,8 +30,68 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
 
   callbacks: {
-    async jwt({ token, user }) {
-      // console.log("jwt", token, user);
+    async signIn({ account, user, credentials, profile, email }) {
+      console.log("from auth signin", {
+        account,
+        user,
+        credentials,
+        profile,
+        email,
+      });
+
+      let userData;
+      let authToken;
+
+      if (account?.provider === "google") {
+        try {
+          const { data } = await userSignup({
+            name: user.name,
+            email: user.email,
+          });
+          userData = data;
+        } catch (error) {
+          if (isAxiosError(error)) {
+            console.log(error.response);
+            if (error.response?.status !== 309) {
+              console.log("returning from axios error");
+              return false;
+            }
+          }
+        }
+
+        try {
+          const { data: token } = await axios.post(
+            "http://localhost:4000/api/users/generateAuthToken",
+            { email: user?.email, name: user?.name }
+          );
+          authToken = token.authToken;
+
+          if (!userData) {
+            const { data: userInfo } = await axios.get(
+              `http://localhost:4000/api/users/${user.email}`
+            );
+
+            userData = userInfo;
+          }
+        } catch (error) {
+          console.log("last block", error);
+          return false;
+        }
+      }
+
+      user._id = userData?._id;
+      user.name = userData?.name;
+      user.email = userData?.email;
+      user.role = userData?.role;
+      user.address = userData?.address;
+      user.authToken = authToken;
+      user.createdAt = userData?.createdAt;
+      user.updatedAt = userData?.updatedAt;
+
+      return true;
+    },
+    async jwt({ token, user, account, profile }) {
+      console.log("jwt", token, user, account, profile);
       if (user) {
         token.user = user;
       }

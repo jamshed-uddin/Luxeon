@@ -4,7 +4,7 @@ import { userSignOut } from "@/actions";
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
 import React, { FormEvent, useTransition } from "react";
 
-const SignoutButton = () => {
+const SignoutButton = ({ className }: { className?: string }) => {
   const [pending, startTransition] = useTransition();
 
   const signoutUser = async (e: FormEvent) => {
@@ -15,7 +15,7 @@ const SignoutButton = () => {
   };
   console.log("signout pending", pending);
   return (
-    <form onSubmit={signoutUser}>
+    <form onSubmit={signoutUser} className={className}>
       <button
         type="submit"
         disabled={pending}

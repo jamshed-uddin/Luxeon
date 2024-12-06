@@ -13,17 +13,14 @@ const adminRoutes = [
   "/dashboard/orders",
 ];
 
-// const { auth } = NextAuth(authConfig);
-
-// This function can be marked `async` if using `await` inside
 export default async function middleware(request: NextRequest) {
   const session = await auth();
   const { nextUrl } = request;
   const pathname = nextUrl.pathname;
 
   //   console.log("mid session", session?.user);
-  console.log("from mid", nextUrl);
-  console.log("url ", request.url);
+  // console.log("from mid", nextUrl);
+  // console.log("url ", request.url);
   //   if (pathname === "/dashboard") {
   //     return NextResponse.redirect(new URL("/", request.url));
   //   }
@@ -32,7 +29,7 @@ export default async function middleware(request: NextRequest) {
     pathname.startsWith(route)
   );
   const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
-  const isAdmin = session?.user.role.toLowerCase() === "admin";
+  const isAdmin = session?.user?.role?.toLowerCase() === "admin";
   const isAuthenticated = !!session?.user;
   const loginUrl = new URL("/signin", request.url);
   loginUrl.searchParams.set("callbackUrl", request.url);

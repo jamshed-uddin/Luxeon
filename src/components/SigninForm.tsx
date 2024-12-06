@@ -1,11 +1,12 @@
 "use client";
 
 import { signInWithEmailAndPassword } from "@/actions";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import React, { FormEvent, useState } from "react";
 import Button from "./Button";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import useDeleteUrlQuery from "@/hooks/useDeleteUrlQuery";
 
 const inputStyle =
   "border-[1.2px] text-sm   border-gray-600 placeholder:text-gray-600 rounded-lg  focus:outline focus:outline-1 focus:outline-black p-1.5 w-full box-border";
@@ -19,11 +20,12 @@ const SigninForm = () => {
   const [error, setError] = useState<string>("");
   const [pending, setPending] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const deleteUrlQuery = useDeleteUrlQuery();
+
   const handleInputChange = () => {
     setError("");
+    deleteUrlQuery("error");
   };
-
-  console.log(callbackUrl);
 
   const submitForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

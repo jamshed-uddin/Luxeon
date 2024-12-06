@@ -6,9 +6,14 @@ import React from "react";
 const Signin = async ({
   searchParams,
 }: {
-  searchParams?: Promise<{ callbackUrl: string }>;
+  searchParams?: Promise<{ callbackUrl: string; error: string }>;
 }) => {
   const params = await searchParams;
+  let signupUrl = "/signup";
+
+  if (params?.callbackUrl) {
+    signupUrl = `/signup?callbackUrl=${params?.callbackUrl}`;
+  }
 
   console.log(params?.callbackUrl);
 
@@ -18,14 +23,16 @@ const Signin = async ({
 
       <div className="text-center">Or, continue with</div>
       <SocialLogin callbackUrl={params?.callbackUrl || "/"} />
+      {params?.error && (
+        <span className="text-sm text-red-500">
+          {params?.error ? "Something went wrong in google signin!" : ""}
+        </span>
+      )}
 
       <div>
         <h2>
           Don&apos;t have an account?{" "}
-          <Link
-            href={`/signup?callbackUrl=${params?.callbackUrl}`}
-            className="underline text-blue-600"
-          >
+          <Link href={signupUrl} className="underline text-blue-600">
             Sign up
           </Link>
         </h2>

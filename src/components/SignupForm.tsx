@@ -3,10 +3,10 @@
 import React, { FormEvent, useState } from "react";
 import Button from "./Button";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signInWithEmailAndPassword } from "@/actions";
+import { userSignup } from "@/lib/userSignup";
 
 const inputStyle =
   "border-[1.2px] text-sm   border-gray-600 placeholder:text-gray-600 rounded-lg  focus:outline focus:outline-1 focus:outline-black p-1.5 w-full box-border";
@@ -17,6 +17,7 @@ const SignupForm = () => {
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
+  const signinError = searchParams.get("error");
   const router = useRouter();
   const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState({
@@ -37,9 +38,9 @@ const SignupForm = () => {
     const formData = new FormData(e.currentTarget);
 
     const userData = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      password: formData.get("password"),
+      name: String(formData.get("name")),
+      email: String(formData.get("email")),
+      password: String(formData.get("password")),
     };
     const confirmPassword = formData.get("confirmPassword");
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -64,7 +65,7 @@ const SignupForm = () => {
 
     try {
       setPending(true);
-      await axios.post("http://localhost:4000/api/users", userData);
+      await userSignup(userData);
       await signInWithEmailAndPassword(userCredentials);
       router.replace(callbackUrl || "/");
       setPending(false);
