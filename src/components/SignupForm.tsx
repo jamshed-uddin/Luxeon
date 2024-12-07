@@ -3,7 +3,7 @@
 import React, { FormEvent, useState } from "react";
 import Button from "./Button";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { useSession } from "next-auth/react";
+
 import { useRouter, useSearchParams } from "next/navigation";
 import { signInWithEmailAndPassword } from "@/actions";
 import { userSignup } from "@/lib/userSignup";
@@ -14,10 +14,9 @@ const inputStyle =
 const labelStyle = " font-medium block mb-1";
 
 const SignupForm = () => {
-  const { data: session } = useSession();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
-  const signinError = searchParams.get("error");
+
   const router = useRouter();
   const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState({
@@ -70,6 +69,7 @@ const SignupForm = () => {
       router.replace(callbackUrl || "/");
       setPending(false);
     } catch (error) {
+      console.log(error);
       setPending(false);
       setError("Something went wrong");
     }

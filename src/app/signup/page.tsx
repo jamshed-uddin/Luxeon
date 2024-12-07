@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 const SignUp = () => {
   return (
-    <div className="lg:w-1/4 mx-auto space-y-4">
+    <div className="lg:w-1/4 mx-auto space-y-4   px-3 lg:px-0">
       <SignupForm />
 
       <div>

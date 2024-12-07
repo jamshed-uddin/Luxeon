@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const FilterAndSearch = () => {
   const [showFilters, setShowFilters] = useState(false);
-  const [queries, setQueries] = useState({
+  const [, setQueries] = useState({
     category: "",
     sort: "",
   });

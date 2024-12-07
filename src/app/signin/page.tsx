@@ -18,7 +18,7 @@ const Signin = async ({
   console.log(params?.callbackUrl);
 
   return (
-    <div className="lg:w-1/4 mx-auto  space-y-4 ">
+    <div className="lg:w-1/4 mx-auto  space-y-4 px-3 lg:px-0">
       <SigninForm />
 
       <div className="text-center">Or, continue with</div>

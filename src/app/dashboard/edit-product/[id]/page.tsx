@@ -38,6 +38,7 @@ const EditProduct = (props: { params: Promise<{ id: string }> }) => {
       //  the update operation
       setProcessing(false);
     } catch (error) {
+      console.log(error);
       setProcessing(false);
     }
   };

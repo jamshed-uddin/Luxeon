@@ -19,7 +19,7 @@ const Hero = () => {
       <div className="absolute inset-0 flex items-center">
         <div className="my-container ">
           <h1 className="text-5xl lg:text-7xl lg:w-1/2">
-            Redefine your space with Luxeon's craft
+            Redefine your space with Luxeon&apos;s craft
           </h1>
           <Link
             href={"/products"}

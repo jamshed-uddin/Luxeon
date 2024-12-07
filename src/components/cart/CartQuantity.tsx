@@ -10,6 +10,7 @@ interface CartQuantityProps {
 
 const CartQuantity = ({ cartId, itemQuantity }: CartQuantityProps) => {
   const [quantity, setQuantity] = useState(itemQuantity || 0);
+  console.log(cartId);
 
   return (
     <div className=" flex items-center gap-4">

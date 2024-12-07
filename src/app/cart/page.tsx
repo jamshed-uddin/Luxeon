@@ -1,4 +1,3 @@
-import Button from "@/components/Button";
 import CartItemCard from "@/components/cart/CartItemCard";
 import PriceTag from "@/components/PriceTag";
 import { fetchCart } from "@/lib/cart";
@@ -6,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 
 const Cart = async () => {
-  const { _id, items, totalItems, subtotal } = await fetchCart(
+  const { _id, items, subtotal } = await fetchCart(
     "http://localhost:4000/api/cart"
   );
 
