@@ -33,7 +33,7 @@ const AllProducts = async () => {
       headerName: "Price",
       field: "action" as const,
       width: 200,
-      renderCell: (row) => <PriceTag price={row.price} />,
+      renderCell: (row: Product) => <PriceTag price={Number(row.price)} />,
     },
     {
       headerName: "Category",
