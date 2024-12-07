@@ -33,7 +33,7 @@ const AllProducts = async () => {
       headerName: "Price",
       field: "action" as const,
       width: 200,
-      renderCell: (row: Product) => <PriceTag price={Number(row.price)} />,
+      renderCell: (row: Product) => <PriceTag price={row.price as number} />,
     },
     {
       headerName: "Category",
@@ -55,8 +55,6 @@ const AllProducts = async () => {
       ),
     },
   ];
-
-  console.log(products.data.at(1));
 
   return (
     <div>
