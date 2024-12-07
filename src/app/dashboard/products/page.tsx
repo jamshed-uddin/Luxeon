@@ -1,7 +1,7 @@
 import ProductTableAction from "@/components/dashboard/ProductTableAction";
 import Table from "@/components/dashboard/Table";
 import PriceTag from "@/components/PriceTag";
-import { ColumnCell, Product } from "@/lib/definition";
+import { Product } from "@/lib/definition";
 import { getProducts } from "@/lib/getProducts";
 import Image from "next/image";
 import React from "react";
