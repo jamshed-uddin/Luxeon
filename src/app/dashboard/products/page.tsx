@@ -50,7 +50,9 @@ const AllProducts = async () => {
       headerName: "Actions",
       field: "action" as const,
       width: 200,
-      renderCell: (row) => <ProductTableAction productId={row._id} />,
+      renderCell: (row: Product) => (
+        <ProductTableAction productId={row._id as string} />
+      ),
     },
   ];
 
