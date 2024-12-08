@@ -37,9 +37,9 @@ const SignupForm = () => {
     const formData = new FormData(e.currentTarget);
 
     const userData = {
-      name: String(formData.get("name")),
-      email: String(formData.get("email")),
-      password: String(formData.get("password")),
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
     };
     const confirmPassword = formData.get("confirmPassword");
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

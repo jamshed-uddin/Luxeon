@@ -1,7 +1,9 @@
 "use client";
 
 import Button from "@/components/Button";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import axios, { isAxiosError } from "axios";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const inputStyle =
@@ -12,6 +14,7 @@ const ForgotPassword = () => {
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   const handleSubmit = async () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -24,14 +27,12 @@ const ForgotPassword = () => {
     try {
       setLoading(true);
       //api call
-      const res = await axios.post(
+      await axios.post(
         "http://localhost:4000/api/users/resetPasswordEmailReqest",
         {
           email,
         }
       );
-
-      console.log(res);
     } catch (error) {
       console.log(error);
       if (isAxiosError(error)) {
@@ -46,29 +47,69 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="lg:w-1/4 mx-auto   px-3 lg:px-0">
-      <div className="">
-        <label className={labelStyle} htmlFor="email">
-          Enter your email
-        </label>
-        <input
-          type="text"
-          name="email"
-          className={inputStyle}
-          placeholder="Email"
-          value={email}
-          onChange={(e) => {
-            setError("");
-            setEmail(e.target.value);
-          }}
-          disabled={loading}
-        />
-      </div>
-      {error && <span className="text-sm text-red-500">{error}</span>}
-      <br />
-      <Button onClick={handleSubmit} disabled={loading} loading={loading}>
-        Continue
-      </Button>
+    <div className="lg:w-1/4 mx-auto   px-3 lg:px-0 ">
+      <h1 className="text-2xl font-medium text-center">Forgot password?</h1>
+      {emailSent ? (
+        <div className="mt-5 text-lg space-y-2 text-center ">
+          <p className="opacity-70">
+            Check your inbox for an email with instructions
+          </p>
+
+          <p className="opacity-70">
+            If you don&apos;t receive an email from us, please check your spam
+            folder
+          </p>
+
+          <p className="text-base ">
+            Didn&apos;t receive email?
+            <span
+              className="cursor-pointer text-blue-600"
+              onClick={() => setEmailSent(false)}
+            >
+              {" "}
+              Resend
+            </span>
+            .
+          </p>
+          <Link
+            href={"/signin"}
+            className="text-base text-blue-600 flex items-center gap-2 justify-center"
+          >
+            <ArrowLeftIcon className="w-5" /> Back to login
+          </Link>
+        </div>
+      ) : (
+        <>
+          <p className="mb-5 text-center opacity-70">
+            No worries, We will send you instructions
+          </p>
+
+          <div className="">
+            <label className={labelStyle} htmlFor="email">
+              Email
+            </label>
+            <input
+              type="text"
+              name="email"
+              className={inputStyle}
+              placeholder="Email"
+              value={email}
+              onChange={(e) => {
+                setError("");
+                setEmail(e.target.value);
+              }}
+              disabled={loading}
+            />
+          </div>
+          {error && <span className="text-sm text-red-500">{error}</span>}
+
+          <div className="mt-4">
+            <Button onClick={handleSubmit} disabled={loading} loading={loading}>
+              Send instructions
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
