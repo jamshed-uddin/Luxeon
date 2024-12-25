@@ -18,13 +18,6 @@ export default async function middleware(request: NextRequest) {
   const { nextUrl } = request;
   const pathname = nextUrl.pathname;
 
-  //   console.log("mid session", session?.user);
-  // console.log("from mid", nextUrl);
-  // console.log("url ", request.url);
-  //   if (pathname === "/dashboard") {
-  //     return NextResponse.redirect(new URL("/", request.url));
-  //   }
-
   const isCustomerRoute = customerPrivateRoutes.some((route) =>
     pathname.startsWith(route)
   );
@@ -40,12 +33,18 @@ export default async function middleware(request: NextRequest) {
   }
 
   //when a authenticated customer tries to access admin route
+
   if (isAuthenticated && !isAdmin && isAdminRoute) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  // when admin tries to access customer routes
+  // if authenticated and trying to access login or signup
+
+  if (isAuthenticated && (pathname === "/signin" || pathname === "/signup")) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
   if (isAdmin && isCustomerRoute) {
+    // when admin tries to access customer routes
     return NextResponse.redirect(new URL("/", request.url));
   }
 

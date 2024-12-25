@@ -5,6 +5,7 @@ import SessionProvider from "../providers/SessionProvider";
 import Navbar from "@/components/Navbar";
 import { jost } from "@/components/font";
 import CartProvider from "@/providers/CartProvider";
+import ToasterClient from "@/components/ToasterClient";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,6 +24,7 @@ export default function RootLayout({
           <body
             className={`${jost.className} antialiased max-w-7xl mx-auto bg-white`}
           >
+            <ToasterClient />
             <Navbar />
             <main className="mt-16">{children}</main>
           </body>

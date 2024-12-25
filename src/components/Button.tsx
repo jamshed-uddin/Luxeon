@@ -20,7 +20,7 @@ const Button = ({
   return (
     <button
       className={clsx(
-        "relative h-10 w-full text-lg overflow-hidden text-nowrap",
+        "disabled:opacity-60 relative h-10 w-full text-lg overflow-hidden text-nowrap",
 
         {
           "border border-black px-6 py-3  rounded-3xl": variant === "bordered",

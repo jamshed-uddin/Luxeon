@@ -32,7 +32,7 @@ const AllProducts = async () => {
     {
       headerName: "Price",
       field: "action" as const,
-      width: 200,
+      width: 150,
       renderCell: (row: Product) => <PriceTag price={row.price as number} />,
     },
     {
@@ -43,7 +43,7 @@ const AllProducts = async () => {
     {
       headerName: "Stock",
       field: "stock" as keyof Product,
-      width: 200,
+      width: 100,
     },
 
     {

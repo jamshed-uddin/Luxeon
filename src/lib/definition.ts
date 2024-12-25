@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 export type Pagination = {
   page: number;
   limit: number;
@@ -49,6 +51,7 @@ export type User = {
   password: string;
   role: string;
   address?: Address[];
+  provider: string;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -76,5 +79,5 @@ export type ColumnCell<T> = {
   headerName: string;
   field: keyof T | "action" | "avatar";
   width?: number;
-  renderCell?: (row: T) => JSX.Element;
+  renderCell?: (row: T) => ReactElement;
 };

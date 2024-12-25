@@ -3,13 +3,15 @@
 import ProductForm from "@/components/dashboard/ProductForm";
 import { Product } from "@/lib/definition";
 import axios from "axios";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { FormEvent, useState } from "react";
 
 const AddProduct = () => {
   const [processing, setProcessing] = useState(false);
+  const router = useRouter();
   const [productInfo, setProductInfo] = useState<Product>({
     title: "",
-    photoUrl: [{ url: "", publicId: "" }],
+    photoUrl: [],
     description: "",
     price: "",
     stock: "",
@@ -17,19 +19,14 @@ const AddProduct = () => {
     details: [{ title: "", value: "" }],
   });
 
-  const submitForm = async () => {
+  const submitForm = async (e: FormEvent) => {
+    e.preventDefault();
     try {
       setProcessing(true);
 
-      const res = await axios.post(
-        "http://localhost:4000/api/products",
-        productInfo
-      );
+      await axios.post("http://localhost:4000/api/products", productInfo);
 
-      console.log(res.data);
-
-      // POST operation
-
+      router.back();
       setProcessing(false);
     } catch (error) {
       console.log(error);
@@ -44,7 +41,7 @@ const AddProduct = () => {
       <ProductForm
         productData={productInfo}
         setProductData={setProductInfo}
-        processing={processing}
+        processing={!processing}
         submitFunc={submitForm}
       />
     </div>

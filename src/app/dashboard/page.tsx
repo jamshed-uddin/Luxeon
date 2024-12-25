@@ -5,7 +5,7 @@ const Dashboard = async () => {
   const session = await auth();
   console.log(session);
 
-  return <div>Overview</div>;
+  return <div>overview</div>;
 };
 
 export default Dashboard;

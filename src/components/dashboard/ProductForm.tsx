@@ -7,9 +7,13 @@ import {
   ChangeEvent,
   DetailedHTMLProps,
   Dispatch,
+  FormEvent,
   InputHTMLAttributes,
   SetStateAction,
+  useEffect,
+  useState,
 } from "react";
+import ImageDropZone from "./ImageDropZone";
 
 const categories = ["Chairs", "Stools", "Tables", "Sofa", "Lighting"];
 
@@ -21,7 +25,7 @@ const labelStyle = " font-medium block mb-1";
 interface ProductFormProps {
   productData: Product;
   setProductData: Dispatch<SetStateAction<Product>>;
-  submitFunc: () => void;
+  submitFunc: (e: FormEvent) => void;
   processing: boolean;
 }
 
@@ -31,7 +35,25 @@ const ProductForm = ({
   submitFunc,
   processing,
 }: ProductFormProps) => {
-  console.log(productData);
+  const [hasFormChanged, setHasFormChanged] = useState(false);
+
+  useEffect(() => {
+    if (!hasFormChanged) return;
+    const handleUnload = (event: BeforeUnloadEvent) => {
+      event?.preventDefault();
+      event.returnValue = "Changes you made may not be saved.";
+      return "";
+    };
+
+    window.addEventListener("beforeunload", handleUnload, { capture: true });
+
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload, {
+        capture: true,
+      });
+    };
+  }, [hasFormChanged]);
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
@@ -47,20 +69,6 @@ const ProductForm = ({
     }
 
     setProductData((p) => ({ ...p, [name]: value }));
-  };
-
-  const handlePhotoUrlChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
-    index: number
-  ) => {
-    const { value } = e.target;
-
-    setProductData((prev) => ({
-      ...prev,
-      photoUrl: prev.photoUrl.map((image, idx) =>
-        idx === index ? { ...image, url: value } : image
-      ),
-    }));
   };
 
   const handleDetailChange = (
@@ -112,7 +120,11 @@ const ProductForm = ({
 
   return (
     <div className="">
-      <div className="w-full space-y-5">
+      <form
+        onSubmit={submitFunc}
+        onChange={() => setHasFormChanged(true)}
+        className="w-full space-y-5"
+      >
         {/* product */}
         <div className="p-3 border-[1.3px] border-gray-300 rounded-lg">
           <h2 className="text-lg uppercase mb-2">Product</h2>
@@ -132,32 +144,14 @@ const ProductForm = ({
               required
             />
           </div>
-          {/* media */}
-          <div className="mb-5 ">
-            <label htmlFor="photoUrl" className={`${labelStyle}`}>
-              Images
-            </label>
-            {productData?.photoUrl?.map((image, index) => (
-              <div key={index} className="mb-5">
-                <input
-                  className={inputStyle}
-                  type="text"
-                  name="photoUrl"
-                  value={image.url}
-                  onChange={(e) => handlePhotoUrlChange(e, index)}
-                  placeholder="Photo URL*"
-                  required
-                />
-              </div>
-            ))}
-          </div>
+
           {/* product description */}
           <div className="mb-5">
             <label htmlFor="description" className={`${labelStyle}`}>
               Description
             </label>
             <textarea
-              className={`${inputStyle}  min-h-32`}
+              className={`${inputStyle}  min-h-32 resize-none hide-scrollbar`}
               name="description"
               value={productData?.description}
               onChange={handleChange}
@@ -165,6 +159,16 @@ const ProductForm = ({
               required
             />
           </div>
+        </div>
+
+        {/* media */}
+
+        <div className="p-3 border-[1.3px] border-gray-300 rounded-lg">
+          <h2 className="text-lg uppercase mb-2">Images</h2>
+          <ImageDropZone
+            photoUrl={productData.photoUrl}
+            setProductData={setProductData}
+          />
         </div>
 
         {/* pricing and stocks */}
@@ -264,7 +268,9 @@ const ProductForm = ({
                   type="button"
                   disabled={allDetails?.length === 1}
                   onClick={() => removeDetailField(index)}
-                  className={"curson-pointer disabled:opacity-60"}
+                  className={`curson-pointer  ${
+                    allDetails?.length === 1 ? "opacity-0" : "opacity-100"
+                  }`}
                 >
                   <XMarkIcon className="w-6" />
                 </button>
@@ -281,16 +287,15 @@ const ProductForm = ({
         </div>
         <div className="flex justify-end">
           <Button
-            type="button"
+            type="submit"
             className={"my-5 w-full lg:w-[20%] ml-auto"}
-            onClick={submitFunc}
             loading={processing}
-            disabled={processing}
+            disabled={processing || !hasFormChanged}
           >
             Save
           </Button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

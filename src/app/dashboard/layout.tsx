@@ -9,7 +9,7 @@ const DashboardLayout = ({
   return (
     <div className="my-container">
       <div className="flex w-full  h-[calc(100vh-4rem)] lg:overflow-hidden flex-col lg:flex-row gap-4">
-        <div className="w-full lg:w-64 flex-none">
+        <div className="w-full lg:w-64 flex-none  lg:bg-gradient-to-r lg:from-white  lg:to-zinc-100">
           <SideNav />
         </div>
         <div className="flex-grow lg:overflow-y-auto hide-scrollbar">

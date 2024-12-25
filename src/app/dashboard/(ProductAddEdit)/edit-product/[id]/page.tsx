@@ -3,13 +3,16 @@
 import ProductForm from "@/components/dashboard/ProductForm";
 import { Product } from "@/lib/definition";
 import { getProductData } from "@/lib/getProductData";
-import React, { useEffect, useState, use } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState, use, FormEvent } from "react";
 
 const EditProduct = (props: { params: Promise<{ id: string }> }) => {
   const params = use(props.params);
+  const router = useRouter();
   const [productData, setProductData] = useState<Product>({
     title: "",
-    photoUrl: [{ url: "", publicId: "" }],
+    photoUrl: [],
     description: "",
     price: "",
     stock: "",
@@ -31,17 +34,28 @@ const EditProduct = (props: { params: Promise<{ id: string }> }) => {
     fetchProductData();
   }, [params.id]);
 
-  const submitUpdate = async () => {
+  const submitUpdate = async (e: FormEvent) => {
+    e.preventDefault();
     try {
       setProcessing(true);
 
       //  the update operation
-      setProcessing(false);
+      const { data } = await axios.patch(
+        `http://localhost:4000/api/products/${params.id}`,
+        productData
+      );
+      router.back();
+
+      // router.push("/dashboard/products");
+      console.log(data);
     } catch (error) {
       console.log(error);
+    } finally {
       setProcessing(false);
     }
   };
+
+  console.log(productData);
 
   return (
     <div>

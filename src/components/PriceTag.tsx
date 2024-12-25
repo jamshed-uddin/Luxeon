@@ -1,19 +1,19 @@
 import React from "react";
 
 interface PriceTagProps {
-  price: number;
+  price: number | string;
   className?: string;
 }
 
 const PriceTag = ({ price, className }: PriceTagProps) => {
   const format = () => {
-    return (price / 100).toLocaleString("en-US", {
+    return (Number(price) / 100).toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
     });
   };
 
-  if (isNaN(price)) {
+  if (isNaN(Number(price))) {
     return null;
   }
 

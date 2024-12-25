@@ -23,7 +23,15 @@ const Navbar = async () => {
             <CartIcon />
           </li>
           <li>
-            <Link href={session?.user ? "/dashboard" : "/signin"}>
+            <Link
+              href={
+                session?.user
+                  ? session.user.role === "admin"
+                    ? "/dashboard"
+                    : "/profile"
+                  : "/signin"
+              }
+            >
               <UserIcon className="w-5 h-5" />
             </Link>
           </li>

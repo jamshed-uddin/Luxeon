@@ -14,14 +14,14 @@ const isKeyOfT = <T extends object>(
 
 const Table = <T extends object>({ column, data }: TableProps<T>) => {
   return (
-    <div className="overflow-auto relative min-h-[70vh] max-h-[70vh] hide-scrollbar  flex flex-col  ">
+    <div className="overflow-auto relative min-h-[70vh] max-h-[70vh] hide-scrollbar  flex flex-col">
       <table className="w-max relative min-w-full ">
-        <thead className=" bg-gray-100 sticky top-0 left-0 right-0 z-50 border-b border-black">
+        <thead className=" bg-gray-100 sticky top-0 left-0 right-0 z-30 border-b border-black">
           <tr className=" ">
             {column?.map((singleColumn) => (
               <th
                 key={String(singleColumn.headerName)}
-                className="text-left px-2 text-lg font-semibold py-3  overflow-hidden "
+                className="text-left px-2 text-lg font-medium py-3  overflow-hidden "
                 style={{
                   width: singleColumn.width
                     ? `${singleColumn.width}px`

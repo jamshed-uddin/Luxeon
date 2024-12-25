@@ -47,6 +47,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const { data } = await userSignup({
             name: user.name,
             email: user.email,
+            provider: account?.provider,
           });
           userData = data;
         } catch (error) {
@@ -91,7 +92,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async jwt({ token, user, account, profile }) {
-      console.log("jwt", token, user, account, profile);
+      // console.log("jwt", token, user, account, profile);
       if (user) {
         token.user = user;
       }

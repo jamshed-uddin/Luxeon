@@ -8,10 +8,10 @@ const shimmer = `
 export const CardSkeleton = () => {
   return (
     <div className={`${shimmer} h-[23rem] w-full  bg-gray-100   shadow-sm`}>
-      <div className={`h-4/5 w-full  bg-gray-50`}></div>
+      <div className={`h-4/5 w-full  bg-gray-100`}></div>
       <div className="mt-4 space-y-2 p-2">
-        <h2 className={`bg-gray-50 w-3/4 h-4 `}></h2>
-        <h2 className={`bg-gray-50 w-1/2 h-4`}></h2>
+        <h2 className={`bg-gray-300 w-3/4 h-5  rounded-lg `}></h2>
+        <h2 className={`bg-gray-300 w-1/2 h-5  rounded-lg`}></h2>
       </div>
     </div>
   );
@@ -21,12 +21,12 @@ export const ProductDetailSkeleton = () => {
   return (
     <div className={"grid grid-cols-1 lg:grid-cols-7 gap-7 "}>
       <div
-        className={`${shimmer} lg:col-span-4 bg-gray-100 rounded-xl h-[calc(100vh-5rem)]`}
+        className={`${shimmer} lg:col-span-4 bg-gray-200 rounded-xl h-[calc(100vh-5rem)]`}
       ></div>
-      <div className={` lg:col-span-3 space-y-2`}>
-        <h2 className={`${shimmer} bg-gray-50 w-3/4 h-5`}></h2>
-        <h2 className={`${shimmer} bg-gray-50 w-1/2 h-4`}></h2>
-        <h2 className={`${shimmer} bg-gray-50 w-1/2 h-4`}></h2>
+      <div className={` lg:col-span-3 space-y-3`}>
+        <h2 className={`${shimmer} bg-gray-200 w-3/4 h-6`}></h2>
+        <h2 className={`${shimmer} bg-gray-200 w-1/2 h-5`}></h2>
+        <h2 className={`${shimmer} bg-gray-200 w-1/2 h-5`}></h2>
       </div>
     </div>
   );
@@ -99,6 +99,55 @@ export function DashboardSkeleton() {
         <RevenueChartSkeleton />
       </div>
     </>
+  );
+}
+
+export function FormSkeleton() {
+  return (
+    <div className="space-y-5 w-full">
+      {/*title and description skeleton */}
+
+      <div className="p-3 border-[1.3px] border-gray-300 rounded-lg">
+        <div className="mb-4">
+          <div className="h-5 w-1/4 bg-gray-300 mb-2 rounded-lg"></div>
+          <div className={`${shimmer} h-9 bg-gray-200`}></div>
+        </div>
+        <div>
+          <div className="h-5 w-1/4 bg-gray-300 mb-2 rounded-lg"></div>
+          <div className={`${shimmer} h-32 bg-gray-200 mb-4`}></div>
+        </div>
+      </div>
+
+      {/* image */}
+      <div className="p-3 border-[1.3px] border-gray-300 rounded-lg">
+        <div className="h-5 w-1/4 bg-gray-300 mb-2 rounded-lg"></div>
+        <div className={`${shimmer} h-32 bg-gray-200`}></div>
+      </div>
+    </div>
+  );
+}
+
+export function TableSkeleton() {
+  return (
+    <div className="w-full border border-gray-300  overflow-hidden">
+      {/* Table Header */}
+      <div className="bg-gray-300 p-4 flex gap-4">
+        <div className={`${shimmer} h-4 w-1/4 bg-gray-200 `}></div>
+        <div className={`${shimmer} h-4 w-1/4 bg-gray-200 `}></div>
+        <div className={`${shimmer} h-4 w-1/4 bg-gray-200`}></div>
+      </div>
+
+      {/* Table Rows */}
+      <div className="divide-y divide-gray-300">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <div key={index} className="px-4 py-5 flex gap-4">
+            <div className={`${shimmer} h-4 w-1/4 bg-gray-200 `}></div>
+            <div className={`${shimmer} h-4 w-1/4 bg-gray-200 `}></div>
+            <div className={`${shimmer} h-4 w-1/4 bg-gray-200`}></div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
