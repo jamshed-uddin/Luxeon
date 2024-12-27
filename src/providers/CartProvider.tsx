@@ -1,7 +1,7 @@
 "use client";
 
 import { fetchCart } from "@/lib/cart";
-import { Cart, CartItem } from "@/lib/definition";
+import { Cart } from "@/lib/definition";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import React, { createContext, useContext } from "react";
