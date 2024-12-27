@@ -34,8 +34,6 @@ const AddProduct = () => {
     }
   };
 
-  console.log(productInfo);
-
   return (
     <div>
       <ProductForm

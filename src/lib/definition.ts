@@ -26,7 +26,7 @@ export type Product = {
   price: number | string;
   category: string;
   stock: number | string;
-  details?: ProductDetails[];
+  details: ProductDetails[];
   createdAt?: Date;
   updatedAt?: Date;
 };

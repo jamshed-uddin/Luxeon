@@ -5,10 +5,8 @@ import { Product } from "@/lib/definition";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   ChangeEvent,
-  DetailedHTMLProps,
   Dispatch,
   FormEvent,
-  InputHTMLAttributes,
   SetStateAction,
   useEffect,
   useState,
@@ -80,7 +78,7 @@ const ProductForm = ({
     console.log(name, value);
     setProductData((prev) => ({
       ...prev,
-      details: prev.details.map((singleDetail, index) =>
+      details: prev?.details?.map((singleDetail, index) =>
         detailIndex === index
           ? name === "title"
             ? { ...singleDetail, title: value }
@@ -91,10 +89,7 @@ const ProductForm = ({
   };
 
   const handlePriceInputKeyDown = (
-    e: DetailedHTMLProps<
-      InputHTMLAttributes<HTMLInputElement>,
-      HTMLInputElement
-    >
+    e: React.KeyboardEvent<HTMLInputElement>
   ) => {
     const invalidChars = ["-", "+", "e"];
     if (invalidChars.includes(e.key)) {
@@ -112,9 +107,7 @@ const ProductForm = ({
   const removeDetailField = (detailIndex: number) => {
     setProductData((prev) => ({
       ...prev,
-      details: prev.details.filter(
-        (singleDetail, index) => index !== detailIndex
-      ),
+      details: prev.details.filter((_, index) => index !== detailIndex),
     }));
   };
 
