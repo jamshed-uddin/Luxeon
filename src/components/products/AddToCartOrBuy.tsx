@@ -4,20 +4,29 @@ import React, { useState } from "react";
 import Button from "../Button";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useCart } from "@/providers/CartProvider";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const AddToCartOrBuy = ({ id }: { id: string }) => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
+  const session = useSession();
   const { addToCart } = useCart();
 
   const handleAddToCart = async () => {
     try {
       setLoading(true);
-      const res = await addToCart({ productId: id, quantity });
+      const res = await addToCart({
+        productId: id,
+        quantity,
+        userId: session?.data?.user._id as string,
+      });
       console.log(res);
-      setLoading(false);
+
+      toast.success("Product added to cart");
     } catch (error) {
-      console.log(error);
+      toast.error((error as Error).message || "Failed to add product to cart");
+    } finally {
       setLoading(false);
     }
   };

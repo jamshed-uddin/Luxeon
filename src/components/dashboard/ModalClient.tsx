@@ -2,7 +2,7 @@
 
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 
 interface ModalClientProps {
   open: boolean;
