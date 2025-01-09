@@ -37,12 +37,15 @@ export type Products = {
 };
 
 export type Address = {
+  _id?: string;
   name?: string;
   phoneNumber?: number;
   country?: string;
   city?: string;
   zipCode?: string;
   addressLine?: string;
+  street?: string;
+  isDefault?: boolean;
 };
 export type User = {
   _id: string;
@@ -50,7 +53,7 @@ export type User = {
   email: string;
   password: string;
   role: string;
-  address?: Address[];
+  address: Address[];
   provider: string;
   createdAt?: Date;
   updatedAt?: Date;

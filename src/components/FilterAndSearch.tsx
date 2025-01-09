@@ -74,7 +74,7 @@ const FilterAndSearch = () => {
       <div
         className={clsx(
           `mt-2 overflow-y-hidden overflow-x-auto h-0 flex flex-nowrap items-center gap-3 transition-all duration-500 `,
-          { "h-10": !showFilters }
+          { "h-10": showFilters }
         )}
       >
         <select

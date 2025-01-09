@@ -1,8 +1,5 @@
 const shimmer = `
-  relative overflow-hidden  rounded-lg w-full 
-  before:absolute before:inset-0 before:bg-gradient-to-r 
-  before:from-transparent before:via-white/100 before:to-transparent 
-  before:animate-shimmer
+  animate-pulse rounded-xl
 `;
 
 export const CardSkeleton = () => {
@@ -21,7 +18,7 @@ export const ProductDetailSkeleton = () => {
   return (
     <div className={"grid grid-cols-1 lg:grid-cols-7 gap-7 "}>
       <div
-        className={`${shimmer} lg:col-span-4 bg-gray-200 rounded-xl h-[calc(100vh-5rem)]`}
+        className={`${shimmer} lg:col-span-4 bg-gray-200 rounded-xl h-[70vh] lg:h-[calc(100vh-5rem)]`}
       ></div>
       <div className={` lg:col-span-3 space-y-3`}>
         <h2 className={`${shimmer} bg-gray-200 w-3/4 h-6`}></h2>
@@ -147,6 +144,19 @@ export function TableSkeleton() {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+export function CartItemSkeleton() {
+  return (
+    <div className="space-y-2">
+      {Array.from({ length: 3 }).map((_, index) => (
+        <div
+          key={index}
+          className={`animate-pulse rounded-xl h-28  bg-gray-200 `}
+        ></div>
+      ))}
     </div>
   );
 }

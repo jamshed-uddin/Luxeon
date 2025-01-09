@@ -1,21 +1,28 @@
 "use client";
 
-import { userSignOut } from "@/actions";
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
-import React, { FormEvent, useTransition } from "react";
+import { useSession, signOut } from "next-auth/react";
+import React, { FormEvent, useState } from "react";
+import LoadingSpinner from "./LoadingSpinner";
 
 const SignoutButton = ({ className }: { className?: string }) => {
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
+  const { update } = useSession();
 
   const signoutUser = async (e: FormEvent) => {
     e.preventDefault();
-    startTransition(async () => {
-      await userSignOut();
-    });
+    setPending(true);
+    signOut({ redirectTo: "/" });
+    setPending(false);
+
+    // update();
   };
-  console.log("signout pending", pending);
+
   return (
-    <form onSubmit={signoutUser} className={className}>
+    <form
+      onSubmit={signoutUser}
+      className={`${className} flex items-center gap-2`}
+    >
       <button
         type="submit"
         disabled={pending}
@@ -23,6 +30,7 @@ const SignoutButton = ({ className }: { className?: string }) => {
       >
         <ArrowLeftStartOnRectangleIcon className="w-6" /> Sign out
       </button>
+      {pending && <LoadingSpinner size="small" />}
     </form>
   );
 };

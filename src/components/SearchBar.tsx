@@ -16,7 +16,8 @@ const SearchBar = ({ inputPlaceholder }: { inputPlaceholder: string }) => {
     } else {
       params.delete("q");
     }
-    replace(`${pathname}?q=${term}`);
+
+    replace(`${pathname}${term ? `?q=${term}` : ``}`);
   }, 600);
 
   return (

@@ -9,13 +9,12 @@ const CartIcon = () => {
   const { cart } = useCart();
 
   return (
-    <Link href={"/cart"} className="relative">
-      <ShoppingCartIcon className="w-5 h-5" />
-      {cart.data?.totalItems && (
-        <span className="block absolute -top-2 -right-2 bg-black text-white px-1 rounded-full  text-xs">
-          {cart.data?.totalItems}
-        </span>
-      )}
+    <Link href={"/cart"} className="relative  ">
+      <ShoppingCartIcon className="w-5 h-5 " />
+
+      <div className=" absolute -top-2 -right-2 bg-black text-white px-1 rounded-full  text-xs">
+        {cart?.data?.totalItems ? cart?.data?.totalItems : ""}
+      </div>
     </Link>
   );
 };

@@ -7,9 +7,8 @@ import React from "react";
 
 const ProductDetail = async (props: { params: Promise<{ id: string }> }) => {
   const params = await props.params;
-  const { title, photoUrl, price, description, details } = await getProductData(
-    params.id
-  );
+  const { title, photoUrl, price, description, details, stock } =
+    await getProductData(params.id);
 
   return (
     <div className="my-container relative my-8">
@@ -34,7 +33,21 @@ const ProductDetail = async (props: { params: Promise<{ id: string }> }) => {
           <h3 className="text-2XL ">
             <PriceTag price={price} className="text-2xl font-light" />
           </h3>
-          <AddToCartOrBuy id={params.id} />
+          {/* stock status */}
+          <div className="inline font-light">
+            {Number(stock) > 0 ? (
+              <div className="flex items-center gap-2">
+                <span className="block h-3 w-3 bg-green-400 rounded-full"></span>
+                <span>In stock</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <span className="block h-3 w-3 bg-red-400 rounded-full"></span>
+                <span>Out of stock</span>
+              </div>
+            )}
+          </div>
+          <AddToCartOrBuy id={params.id} inStock={Number(stock) > 0} />
         </div>
         <div className=" w-full lg:col-span-4  text-lg">
           {/* description */}

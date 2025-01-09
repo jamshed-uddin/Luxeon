@@ -43,8 +43,9 @@ export default async function middleware(request: NextRequest) {
   if (isAuthenticated && (pathname === "/signin" || pathname === "/signup")) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-  if (isAdmin && isCustomerRoute) {
-    // when admin tries to access customer routes
+  // when admin tries to access customer routes
+  // todo: omit the exclamation mark
+  if (!isAdmin && isCustomerRoute) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 

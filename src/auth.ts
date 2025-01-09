@@ -31,13 +31,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   callbacks: {
     async signIn({ account, user, credentials, profile, email }) {
-      console.log("from auth signin", {
-        account,
-        user,
-        credentials,
-        profile,
-        email,
-      });
+      // console.log("from auth signin", {
+      //   account,
+      //   user,
+      //   credentials,
+      //   profile,
+      //   email,
+      // });
 
       let userData;
       let authToken;
@@ -54,7 +54,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           if (isAxiosError(error)) {
             console.log(error.response);
             if (error.response?.status !== 309) {
-              console.log("returning from axios error");
               return false;
             }
           }
@@ -74,11 +73,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
             userData = userInfo;
           }
-        } catch (error) {
-          console.log("last block", error);
+        } catch {
           return false;
         }
       }
+
+      console.log("user signed in");
+
+      await axios.post(
+        "http://localhost:4000/api/cart/merge",
+        {
+          userId: userData?._id,
+        },
+        { withCredentials: true }
+      );
 
       user._id = userData?._id;
       user.name = userData?.name;

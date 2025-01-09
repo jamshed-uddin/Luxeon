@@ -36,14 +36,23 @@ const CartProvider = ({
 }): React.ReactNode => {
   const { data, status } = useSession();
 
-  const cart = useSWR(
+  const key =
     status === "loading"
-      ? "null"
-      : data?.user
-      ? `http://localhost:4000/api/cart?userId=${data?.user._id}`
-      : `http://localhost:4000/api/cart`,
+      ? null
+      : status === "authenticated"
+      ? `cart-${data?.user?._id}`
+      : "cart-guest";
+
+  const cart = useSWR(
+    key
+      ? data?.user
+        ? `http://localhost:4000/api/cart?userId=${data?.user._id}`
+        : `http://localhost:4000/api/cart`
+      : null,
     fetchCart
   );
+
+  console.log(cart.data);
 
   const addToCart = async ({
     productId,

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Product } from "@/lib/definition";
+import { PhotoUrlObj, Product } from "@/lib/definition";
 import Image from "next/image";
 import PriceTag from "../PriceTag";
 import Link from "next/link";
@@ -21,7 +21,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           width={300}
           height={300}
           className="h-full w-full object-cover  "
-          src={photoUrl[0]}
+          src={(photoUrl.at(0) as PhotoUrlObj).url}
           alt={title}
         />
       </div>

@@ -7,7 +7,7 @@ import { useCart } from "@/providers/CartProvider";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
-const AddToCartOrBuy = ({ id }: { id: string }) => {
+const AddToCartOrBuy = ({ id, inStock }: { id: string; inStock: boolean }) => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const session = useSession();
@@ -54,7 +54,11 @@ const AddToCartOrBuy = ({ id }: { id: string }) => {
         </div>
       </div>
       <div className="space-y-3">
-        <Button disabled={loading} loading={loading} onClick={handleAddToCart}>
+        <Button
+          disabled={loading || !inStock}
+          loading={loading}
+          onClick={handleAddToCart}
+        >
           Add to cart
         </Button>
       </div>
