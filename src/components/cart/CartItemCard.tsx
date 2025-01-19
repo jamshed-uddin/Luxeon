@@ -34,11 +34,7 @@ const CartItemCard = ({ cartItem, placedIn }: CartItemCardProps) => {
   };
 
   return (
-    <div
-      className={`flex gap-4 rounded-xl shadow-md p-2 w-full ${
-        (cartItem.product.stock as number) <= 0 && "opacity-50"
-      }`}
-    >
+    <div className={`flex gap-4 rounded-xl shadow-md p-2 w-full `}>
       <div className="h-24 w-24 rounded-xl overflow-hidden">
         <Image
           src={(product.photoUrl.at(0) as PhotoUrlObj).url}
@@ -56,14 +52,26 @@ const CartItemCard = ({ cartItem, placedIn }: CartItemCardProps) => {
           {placedIn === "checkout" && (
             <div className="text-base  font-normal">{quantity}x</div>
           )}
-          {(cartItem.product.stock as number) <= 0 && (
-            <div className="flex items-center gap-1 text-sm">
-              <span className="block h-3 w-3 bg-red-400 rounded-full"></span>
-              <span>Out of stock</span>
-            </div>
-          )}
+
+          <div className="flex flex-col text-xs">
+            {(cartItem.product.stock as number) <= 0 && (
+              <div className="flex items-center gap-1">
+                <span className="block h-2.5 w-2.5 bg-red-400 rounded-full"></span>
+                <span>Out of stock</span>
+              </div>
+            )}
+            {(cartItem.product.stock as number) <
+              (cartItem.quantity as number) &&
+              (cartItem.product.stock as number) !== 0 && (
+                <div className="flex items-center gap-1">
+                  <span className="block h-2.5 w-2.5 bg-red-400 rounded-full"></span>
+                  <span>Quantity is greater than stock</span>
+                </div>
+              )}
+          </div>
+
           <PriceTag
-            price={(product.price as number) * quantity}
+            price={product.price as number}
             className={"text-lg font-[400]  mt-auto"}
           />
         </div>

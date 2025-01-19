@@ -2,9 +2,10 @@
 
 import { fetchCart } from "@/lib/cart";
 import { Cart } from "@/lib/definition";
+import { requestClient } from "@/lib/requestClient";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import useSWR, { SWRResponse } from "swr";
 
 interface CartContextType {
@@ -44,15 +45,17 @@ const CartProvider = ({
       : "cart-guest";
 
   const cart = useSWR(
-    key
-      ? data?.user
-        ? `http://localhost:4000/api/cart?userId=${data?.user._id}`
-        : `http://localhost:4000/api/cart`
-      : null,
+    key ? (data?.user ? `/cart?userId=${data?.user._id}` : `/cart`) : null,
     fetchCart
   );
 
-  console.log(cart.data);
+  useEffect(() => {
+    if (!data) return;
+    requestClient(`/cart/merge`, {
+      method: "post",
+      data: { userId: data?.user?._id },
+    });
+  }, [data]);
 
   const addToCart = async ({
     productId,
@@ -75,8 +78,8 @@ const CartProvider = ({
       );
       cart.mutate();
       return response.data;
-    } catch (error) {
-      throw error;
+    } catch {
+      throw new Error("Failed to add to cart.");
     }
   };
   const updateCart = async ({

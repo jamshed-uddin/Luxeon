@@ -1,20 +1,28 @@
-import { Products } from "./definition";
+import type { Products } from "./definition";
+import { requestClient } from "./requestClient";
 
 export const getProducts = async (url: string) => {
   try {
-    const res = await fetch(url, {
-      headers: {
-        "Cache-Control": "no-cache",
-      },
+    const response = await requestClient<Products>(url, {
+      method: "get",
     });
-    if (!res.ok) {
-      throw new Error("Something went wrong!");
-    }
 
-    const products = await res.json();
+    return response;
 
-    return products as Products;
+    // const res = await fetch(url, {
+    //   headers: {
+    //     "Cache-Control": "no-cache",
+    //   },
+    // });
+    // if (!res.ok) {
+    //   throw new Error("Something went wrong!");
+    // }
+
+    // const products = await res.json();
+
+    // return products as Products;
   } catch (error) {
-    throw error;
+    console.log(error);
+    throw new Error("Something went wrong");
   }
 };

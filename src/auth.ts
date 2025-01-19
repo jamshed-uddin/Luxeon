@@ -30,15 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
 
   callbacks: {
-    async signIn({ account, user, credentials, profile, email }) {
-      // console.log("from auth signin", {
-      //   account,
-      //   user,
-      //   credentials,
-      //   profile,
-      //   email,
-      // });
-
+    async signIn({ account, user }) {
       let userData;
       let authToken;
 
@@ -78,16 +70,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
 
-      console.log("user signed in");
-
-      await axios.post(
-        "http://localhost:4000/api/cart/merge",
-        {
-          userId: userData?._id,
-        },
-        { withCredentials: true }
-      );
-
       user._id = userData?._id;
       user.name = userData?.name;
       user.email = userData?.email;
@@ -100,14 +82,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async jwt({ token, user }) {
-      // console.log("jwt", token, user, account, profile);
       if (user) {
         token.user = user;
       }
       return token;
     },
     async session({ session, token }) {
-      // console.log("session", session, token);
       if (token.user) {
         session.user = token.user as typeof session.user;
       }

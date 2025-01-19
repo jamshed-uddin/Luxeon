@@ -1,18 +1,8 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import React from "react";
 
-const ErrorElement = ({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) => {
-  const errorMessage =
-    error.message ===
-    "An error occurred in the Server Components render but no message was provided"
-      ? "Something went wrong!"
-      : error.message;
+const ErrorElement = ({ reset }: { reset: () => void }) => {
+  const errorMessage = "Something went wrong!";
 
   return (
     <div className="flex justify-center my-container">

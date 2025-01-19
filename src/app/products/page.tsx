@@ -36,9 +36,7 @@ const Products = async (props: {
 
   const validParams = validQueryParams(searchParams, validQueries);
 
-  const products = await getProducts(
-    `http://localhost:4000/api/products?${validParams}`
-  );
+  const products = await getProducts(`/products?${validParams}`);
 
   return (
     <div className="my-container">

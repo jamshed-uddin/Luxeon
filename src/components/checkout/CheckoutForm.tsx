@@ -7,11 +7,13 @@ import {
 } from "@stripe/react-stripe-js";
 import React, { FormEvent, useState } from "react";
 import Button from "../Button";
+import { useRouter } from "next/navigation";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,6 +39,7 @@ const CheckoutForm = () => {
 
     console.log(paymentIntent);
 
+    router.push("/payment-success");
     setIsLoading(false);
   };
 

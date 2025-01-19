@@ -1,11 +1,10 @@
-import axios from "axios";
-import { Cart } from "./definition";
+import type { Cart } from "./definition";
+import { requestClient } from "./requestClient";
 
 export const fetchCart = async (url: string): Promise<Cart> => {
   try {
-    const res = await axios.get(url, { withCredentials: true });
-    console.log("response", res.data);
-    return res.data as Cart;
+    const cart = requestClient<Cart>(url, { method: "get" });
+    return cart;
   } catch {
     throw Error("Something went wrong");
   }

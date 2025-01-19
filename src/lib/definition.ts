@@ -84,3 +84,43 @@ export type ColumnCell<T> = {
   width?: number;
   renderCell?: (row: T) => ReactElement;
 };
+
+export type Order = {
+  _id: string;
+  user: {
+    userId: string;
+    name: string;
+    email: string;
+  };
+  address: Address;
+  status: "processing" | "delivered" | "cancelled";
+  totalPrice: number;
+  items: OrderItem[];
+  paymentDetails: PaymentDetails;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export type OrderItem = {
+  _id: string;
+  orderId: string;
+  product: Product;
+  price: number;
+  quantity: number;
+  subtotal: number;
+
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export type PaymentDetails = {
+  amount: number;
+  createdAt: Date;
+  currency: "USD";
+  orderId: string;
+  paymentMethod: "Card";
+  transactionId: string;
+  updatedAt: Date;
+  user: string;
+  _id: string;
+};

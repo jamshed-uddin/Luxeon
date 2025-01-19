@@ -7,7 +7,7 @@ import Image from "next/image";
 import React from "react";
 
 const AllProducts = async () => {
-  const products = await getProducts(`http://localhost:4000/api/products`);
+  const products = await getProducts(`/products`);
 
   const column = [
     {

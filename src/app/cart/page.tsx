@@ -15,13 +15,6 @@ const Cart = async () => {
 
   const cartId = (await cookies()).get("cartId");
 
-  // const cartRes = await fetch(url, {
-  //   headers: {
-  //     Cookie: `cartId=${cartId?.value}`, // Include cookies manually
-  //   },
-  // });
-  // const cart = await cartRes.json();
-
   const cart = await requestClient<Cart>(url, {
     method: "get",
     headers: { Cookie: `cartId=${cartId?.value}` },
@@ -29,7 +22,7 @@ const Cart = async () => {
 
   return (
     <div className="my-container">
-      <h2 className="text-3xl font-medium">Your cart</h2>
+      <h2 className="text-3xl font-medium">Cart</h2>
 
       {cart?.items?.length === 0 || !cart?.items ? (
         <div className="flex flex-col justify-center items-center h-[50vh]">
@@ -50,7 +43,7 @@ const Cart = async () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col lg:flex-row gap-4 mt-8">
+        <div className="flex flex-col lg:flex-row gap-4 mt-4 lg:mt-8 ">
           {/* cart items */}
           <div className="w-full lg:w-[65%]">
             {cart?.items?.map((item) => (
