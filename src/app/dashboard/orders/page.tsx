@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
 
 import OrdersList from "@/components/OrdersList";
 import type { Order } from "@/lib/definition";
@@ -7,16 +7,13 @@ import { requestClient } from "@/lib/requestClient";
 import React from "react";
 
 const Orders = async () => {
-  const session = await auth();
-  const orders = await requestClient<Order[]>(
-    `/orders?userId=${session?.user._id}`,
-    {
-      method: "get",
-    }
-  );
+  const orders = await requestClient<Order[]>(`/orders`, {
+    method: "get",
+  });
 
   return (
     <div>
+      <DashboardHeader>Orders</DashboardHeader>
       <OrdersList orders={orders} />
     </div>
   );

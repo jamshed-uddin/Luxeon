@@ -44,8 +44,8 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
   // when admin tries to access customer routes
-  // todo: omit the exclamation mark
-  if (!isAdmin && isCustomerRoute) {
+
+  if (isAdmin && isCustomerRoute) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 

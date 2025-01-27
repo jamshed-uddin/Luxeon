@@ -1,5 +1,6 @@
 "use client";
 
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import ProductForm from "@/components/dashboard/ProductForm";
 import { Product } from "@/lib/definition";
 import { getProductData } from "@/lib/getProductData";
@@ -55,10 +56,9 @@ const EditProduct = (props: { params: Promise<{ id: string }> }) => {
     }
   };
 
-  console.log(productData);
-
   return (
     <div>
+      <DashboardHeader>Edit product</DashboardHeader>
       <ProductForm
         productData={productData}
         setProductData={setProductData}

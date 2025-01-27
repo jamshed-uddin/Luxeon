@@ -1,9 +1,11 @@
 import axios, { isAxiosError } from "axios";
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import { authConfig } from "./auth.config";
 import { userSignup } from "./lib/userSignup";
+import { requestClient } from "./lib/requestClient";
+import { Address } from "./lib/definition";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
@@ -81,7 +83,30 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update" && session.address.length) {
+        console.log("new addresses", session.address);
+        console.log("user from auth", user);
+
+        // user.address = session.address;
+
+        console.log("token", token, "address", (token.user as User).address);
+        console.log("session", session);
+        try {
+          const res = await requestClient<{ address: Address[] }>(
+            `/users/${(token.user as User)._id}`,
+            {
+              method: "patch",
+              data: { address: session.address },
+            }
+          );
+          console.log(res.address);
+          (token.user as User).address = res?.address;
+        } catch {
+          return null;
+        }
+      }
+
       if (user) {
         token.user = user;
       }

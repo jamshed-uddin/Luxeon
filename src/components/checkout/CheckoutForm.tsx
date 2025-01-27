@@ -58,9 +58,7 @@ const CheckoutForm = () => {
           Pay
         </Button>
       </div>
-      {error && (
-        <div className="text-sm  text-red-500 inline ">{error}hello</div>
-      )}
+      {error && <div className="text-sm  text-red-500 inline ">{error}</div>}
     </form>
   );
 };

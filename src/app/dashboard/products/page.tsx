@@ -1,3 +1,4 @@
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import ProductTableAction from "@/components/dashboard/ProductTableAction";
 import Table from "@/components/dashboard/Table";
 import PriceTag from "@/components/PriceTag";
@@ -58,6 +59,7 @@ const AllProducts = async () => {
 
   return (
     <div>
+      <DashboardHeader>Products</DashboardHeader>
       <Table data={products.data} column={column} />
     </div>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import ProductForm from "@/components/dashboard/ProductForm";
 import { Product } from "@/lib/definition";
 import axios from "axios";
@@ -36,6 +37,7 @@ const AddProduct = () => {
 
   return (
     <div>
+      <DashboardHeader>Add product</DashboardHeader>
       <ProductForm
         productData={productInfo}
         setProductData={setProductInfo}

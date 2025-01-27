@@ -4,7 +4,6 @@ import React from "react";
 const Profile = () => {
   return (
     <div>
-      orders
       <CustomerOrders />
     </div>
   );

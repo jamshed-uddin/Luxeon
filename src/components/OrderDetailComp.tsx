@@ -1,24 +1,17 @@
-import OrderStatus from "@/components/dashboard/OrderStatus";
-import InvoicePdfDwnldBtn from "@/components/InvoicePdfDwnldBtn";
-import PriceTag from "@/components/PriceTag";
-import type { Order, PhotoUrlObj } from "@/lib/definition";
-import { requestClient } from "@/lib/requestClient";
-
-import Image from "next/image";
+import { Order, PhotoUrlObj } from "@/lib/definition";
 import React from "react";
+import OrderStatus from "./dashboard/OrderStatus";
+import InvoicePdfDwnldBtn from "./InvoicePdfDwnldBtn";
+import Link from "next/link";
+import Image from "next/image";
+import PriceTag from "./PriceTag";
+import { formatDate } from "@/lib/formatDate";
 
-const OrderDetails = async ({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) => {
-  const { id } = await params;
-  console.log(id);
+interface OrderDetailCompProps {
+  order: Order;
+}
 
-  const order = await requestClient<Order>(`/orders/${id}`, {
-    method: "get",
-  });
-
+const OrderDetailComp = ({ order }: OrderDetailCompProps) => {
   const priceInfo: Record<string, number> = {
     Subtotal: order?.totalPrice,
     Shipping: 0,
@@ -27,8 +20,8 @@ const OrderDetails = async ({
   };
 
   return (
-    <div className="mb-3">
-      <div className="flex items-center justify-between mb-10">
+    <div className="mb-3 my-container">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-5  gap-2 lg:gap-0">
         <h1 className="lg:text-2xl font-medium flex items-center gap-2">
           <span>{`Order_${order?._id}`} </span>
           <OrderStatus status={order?.status} />
@@ -42,17 +35,18 @@ const OrderDetails = async ({
 
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-3">
         {/* order items */}
-        <div className="mt-4 col-span-2 ">
-          <h1 className="text-lg font-medium">Items</h1>
+        <div className=" col-span-2 ">
+          <h1 className="text-lg font-medium mb-3 ">Items</h1>
           <div className="">
             {order?.items.map((item) => {
               const { photoUrl, title } = item?.product;
               const { quantity, price } = item;
 
               return (
-                <div
+                <Link
+                  href={`/products/${item?.product?._id}`}
                   key={item._id}
-                  className="flex  gap-3 border border-gray-200 rounded-xl p-1 mb-2"
+                  className="flex gap-3 border border-gray-200 rounded-xl p-1 mb-2"
                 >
                   <div className="size-20">
                     <Image
@@ -71,7 +65,7 @@ const OrderDetails = async ({
                       className={"text-lg font-[400]  mt-auto"}
                     />
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>
@@ -92,19 +86,19 @@ const OrderDetails = async ({
         </div>
 
         {/* order meta data */}
-        <div>
-          <div className="mt-4 border border-gray-200 p-2 rounded-xl">
+        <div className="space-y-3 mt-2">
+          <div className=" border border-gray-200 p-2 rounded-xl">
             <h1 className="text-lg font-medium">Customer details</h1>
 
             <div className="space-y-1">
-              <h2 className="font-medium">{order?.user.name}</h2>
+              <h2 className="font-medium  text-sm">{order?.user.name}</h2>
               <h2 className="text-sm">
                 <span className="font-light">Email: </span> {order?.user.email}
               </h2>
             </div>
           </div>
 
-          <div className="mt-4 border border-gray-200 p-2 rounded-xl">
+          <div className=" border border-gray-200 p-2 rounded-xl">
             <h1 className="text-lg font-medium">Shipping details</h1>
             <div>
               <h2 className="text-sm">
@@ -121,7 +115,7 @@ const OrderDetails = async ({
               </h2>
             </div>
           </div>
-          <div className="mt-4 border border-gray-200 p-2 rounded-xl">
+          <div className=" border border-gray-200 p-2 rounded-xl">
             <h1 className="text-lg font-medium">Payment details</h1>
             <div className="text-sm space-y-1">
               <h2>
@@ -132,6 +126,10 @@ const OrderDetails = async ({
                 <span className="font-light">Payment method: </span>{" "}
                 {order?.paymentDetails.paymentMethod}
               </h2>
+              <h2>
+                <span className="font-light">Date: </span>{" "}
+                {formatDate(order?.createdAt as Date)}
+              </h2>
             </div>
           </div>
         </div>
@@ -140,4 +138,4 @@ const OrderDetails = async ({
   );
 };
 
-export default OrderDetails;
+export default OrderDetailComp;

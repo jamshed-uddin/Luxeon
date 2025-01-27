@@ -61,21 +61,27 @@ export function DashboardCardsSkeleton() {
       <DashboardCardSkeleton />
       <DashboardCardSkeleton />
       <DashboardCardSkeleton />
-      <DashboardCardSkeleton />
     </>
   );
 }
 
 export function RevenueChartSkeleton() {
+  const height = [20, 40, 50, 70, 20, 80];
+
   return (
-    <div className={`${shimmer} relative w-full overflow-hidden md:col-span-4`}>
-      <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
-      <div className="rounded-xl bg-gray-100 p-4">
-        <div className="mt-0 grid h-[410px] grid-cols-12 items-end gap-2 rounded-md bg-white p-4 sm:grid-cols-13 md:gap-4" />
-        <div className="flex items-center pb-2 pt-6">
-          <div className="h-5 w-5 rounded-full bg-gray-200" />
-          <div className="ml-2 h-4 w-20 rounded-md bg-gray-200" />
-        </div>
+    <div className="w-full h-72 bg-white p-4">
+      <div className="w-full h-full flex items-end justify-between">
+        {[...Array(6)].map((_, index) => (
+          <div
+            key={index}
+            className="h-full flex flex-col justify-end w-full mx-0.5 sm:mx-1 "
+          >
+            <div
+              className="bg-gray-100 w-full rounded-t-2xl"
+              style={{ height: `${height[index]}%` }}
+            ></div>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -160,5 +166,18 @@ export function CartItemSkeleton() {
     </div>
   );
 }
+
+export const AddressCardSkeleton = ({ amount = 2 }: { amount?: number }) => {
+  return (
+    <div className="space-y-3">
+      {[...Array(amount)].map((_, index) => (
+        <div
+          key={index}
+          className="bg-gray-100 w-full rounded-2xl h-16 animate-pulse"
+        ></div>
+      ))}
+    </div>
+  );
+};
 
 export default CardsSkeleton;

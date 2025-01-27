@@ -9,8 +9,8 @@ import SignoutButton from "../SignoutButton";
 const links = [
   { name: "Orders", href: "/profile" },
   {
-    name: "Addresses",
-    href: "/profile/addresses",
+    name: "Settings",
+    href: "/profile/settings",
   },
 ];
 
@@ -24,9 +24,10 @@ const ProfileNav = () => {
         {links.map((link) => (
           <Link
             className={clsx(
-              "opacity-70 hover:opacity-100 transition-opacity duration-300",
+              "  transition-opacity duration-300 text-base font-medium",
               {
-                "border-b-2 border-black opacity-100": pathname === link.href,
+                "border-b-2 border-blue-600 text-blue-600":
+                  pathname === link.href,
               }
             )}
             key={link.name}

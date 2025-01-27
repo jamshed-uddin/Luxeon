@@ -34,7 +34,7 @@ const CartItemCard = ({ cartItem, placedIn }: CartItemCardProps) => {
   };
 
   return (
-    <div className={`flex gap-4 rounded-xl shadow-md p-2 w-full `}>
+    <div className={`flex gap-4 rounded-xl border border-gray-300 p-2 w-full `}>
       <div className="h-24 w-24 rounded-xl overflow-hidden">
         <Image
           src={(product.photoUrl.at(0) as PhotoUrlObj).url}

@@ -12,7 +12,9 @@ const Profile = async ({
   console.log(session);
   return (
     <div className="my-container">
-      <h2 className="text-3xl font-medi">Hello, {session?.user?.name}</h2>
+      <h2 className="text-xl lg:text-2xl font-medium">
+        Hello, {session?.user?.name}
+      </h2>
       <ProfileNav />
 
       <div className="mt-5">{children}</div>

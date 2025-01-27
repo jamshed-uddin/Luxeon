@@ -1,4 +1,8 @@
 import { auth } from "@/auth";
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import RevenueChart from "@/components/dashboard/RevenueChart";
+import TopMetricsWidgets from "@/components/dashboard/TopMetricsWidgets";
+
 import React from "react";
 
 const Dashboard = async () => {
@@ -7,12 +11,11 @@ const Dashboard = async () => {
 
   return (
     <div>
-      {/* top widgets */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        <div className="h-44  shadow-md rounded-xl"></div>
-        <div className="h-44  shadow-md rounded-xl"></div>
-        <div className="h-44  shadow-md rounded-xl"></div>
+      <div className="mb-4">
+        <DashboardHeader>Hello, {session?.user.name}</DashboardHeader>
       </div>
+      <TopMetricsWidgets />
+      <RevenueChart />
     </div>
   );
 };
