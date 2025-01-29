@@ -7,11 +7,6 @@ import { Metadata } from "next";
 import Link from "next/link";
 import React, { useState } from "react";
 
-export const metadata: Metadata = {
-  title: "Forgot password | Luxeon - Redefine your space",
-  description: "The forgot password page",
-};
-
 const inputStyle =
   "border-[1.2px] text-sm   border-gray-600 placeholder:text-gray-600 rounded-lg  focus:outline focus:outline-1 focus:outline-black p-1.5 w-full box-border";
 
