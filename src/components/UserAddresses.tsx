@@ -9,6 +9,7 @@ import { Address } from "@/lib/definition";
 
 import AddNewAddress from "./AddNewAddress";
 import { AddressCardSkeleton } from "./Skeletons";
+import SectionTitle from "./SectionTitle";
 
 // making a formdata to js object
 export const processAddressData = (data: HTMLFormElement) => {
@@ -78,7 +79,7 @@ const UserAddresses = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4">
       <div className="">
-        <h1 className="text-xl font-medium ">Addresses</h1>
+        <SectionTitle className="text-xl">Addresses</SectionTitle>
       </div>
 
       <div className="space-y-3 lg:col-span-3">
@@ -86,7 +87,6 @@ const UserAddresses = () => {
           <AddNewAddress />
         </div>
         {status === "loading" ? (
-          // <LoadingSpinner size="small" />
           <AddressCardSkeleton amount={2} />
         ) : (
           <div className="my-2 space-y-3">
@@ -102,50 +102,56 @@ const UserAddresses = () => {
                 />
               </ModalClient>
             )}
-            {addresses?.map((address, index) => (
-              <div
-                key={index}
-                className="border border-gray-300 rounded-lg px-2 py-5  relative"
-              >
-                <p>
-                  {" "}
-                  {[
-                    address?.name,
-                    address?.addressLine,
-                    address?.street,
-                    address?.city && ` ${address?.city}(${address?.zipCode})`,
-                    address?.country,
-                  ]
-                    .filter(Boolean)
-                    .join(", ")}
-                </p>
-                <p className="text-sm flex items-center gap-3 font-medium absolute top-1 right-2 ">
-                  {address.isDefault && (
-                    <span className="border border-gray-400 px-2 rounded-xl text-xs">
-                      Default
-                    </span>
-                  )}
-
-                  {/* edit address button */}
-                  <button
-                    className="text-blue-600"
-                    onClick={() => {
-                      openEditModalHandler();
-                      setSelectedAdrsForEdit(address);
-                    }}
-                  >
-                    <PencilSquareIcon className="w-4" />
-                  </button>
-                  {/* delete address button */}
-                  <button
-                    className="text-blue-600"
-                    onClick={() => deleteAnAddress(address._id as string)}
-                  >
-                    <TrashIcon className="w-4" />
-                  </button>
-                </p>
+            {!addresses?.length ? (
+              <div>
+                <h2>No address added yet.</h2>
               </div>
-            ))}
+            ) : (
+              addresses?.map((address, index) => (
+                <div
+                  key={index}
+                  className="border border-gray-300 rounded-lg px-2 py-5  relative"
+                >
+                  <p>
+                    {" "}
+                    {[
+                      address?.name,
+                      address?.addressLine,
+                      address?.street,
+                      address?.city && ` ${address?.city}(${address?.zipCode})`,
+                      address?.country,
+                    ]
+                      .filter(Boolean)
+                      .join(", ")}
+                  </p>
+                  <p className="text-sm flex items-center gap-3 font-medium absolute top-1 right-2 ">
+                    {address.isDefault && (
+                      <span className="border border-gray-400 px-2 rounded-xl text-xs">
+                        Default
+                      </span>
+                    )}
+
+                    {/* edit address button */}
+                    <button
+                      className="text-blue-600"
+                      onClick={() => {
+                        openEditModalHandler();
+                        setSelectedAdrsForEdit(address);
+                      }}
+                    >
+                      <PencilSquareIcon className="w-4" />
+                    </button>
+                    {/* delete address button */}
+                    <button
+                      className="text-blue-600"
+                      onClick={() => deleteAnAddress(address._id as string)}
+                    >
+                      <TrashIcon className="w-4" />
+                    </button>
+                  </p>
+                </div>
+              ))
+            )}
           </div>
         )}
       </div>

@@ -1,8 +1,13 @@
 "use client";
 
+import { requestClient } from "@/lib/requestClient";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import React, { FormEvent, useState } from "react";
+import Button from "./Button";
+import toast from "react-hot-toast";
+import SectionTitle from "./SectionTitle";
 
 const passwordInputs = [
   {
@@ -37,6 +42,7 @@ const PasswordChange = () => {
     newPassword: "",
     confirmNewPassword: "",
   });
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState<Record<string, boolean>>({
     currentPassword: false,
     newPassword: false,
@@ -53,9 +59,9 @@ const PasswordChange = () => {
     }));
   };
 
-  console.log(password);
-
-  const changePassword = async () => {
+  const changePassword = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
     if (
       !password.currentPassword ||
       !password.newPassword ||
@@ -67,6 +73,30 @@ const PasswordChange = () => {
     } else if (String(password.newPassword).length < 6) {
       return setError("Password length must be 6 or higher");
     }
+    setLoading(true);
+    try {
+      await requestClient("/users/changePassword", {
+        method: "put",
+        data: {
+          userEmail: data?.user.email,
+          currentPassword: password.currentPassword,
+          newPassword: password.newPassword,
+        },
+      });
+      setPassword({
+        currentPassword: "",
+        newPassword: "",
+        confirmNewPassword: "",
+      });
+      toast.success("Password changed.");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        setError(error.response?.data.message);
+      }
+      setError("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (data?.user.provider === "google") {
@@ -75,8 +105,10 @@ const PasswordChange = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4">
-      <h1 className="text-xl font-medium mb-4">Change Password</h1>
-      <form action="" className="col-span-3 mt-4">
+      <SectionTitle className="text-xl font-medium mb-4">
+        Change Password
+      </SectionTitle>
+      <form action="" className="col-span-3 mt-4" onSubmit={changePassword}>
         <div className="space-y-3">
           {passwordInputs.map((input) => (
             <div key={input.name} className="space-y-1">
@@ -114,12 +146,11 @@ const PasswordChange = () => {
         </div>
         {error && <span className="text-red-500 text-sm ">{error}</span>}
         <div className="my-4 flex justify-end">
-          <button
-            onClick={changePassword}
-            className="border border-black px-3 py-1 rounded-xl"
-          >
-            Change password
-          </button>
+          <div>
+            <Button disabled={loading} loading={loading}>
+              Change password
+            </Button>
+          </div>
         </div>
       </form>
     </div>

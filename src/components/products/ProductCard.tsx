@@ -12,10 +12,7 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const { photoUrl, title, price } = product || {};
   return (
-    <Link
-      href={`/products/${product._id}`}
-      className="h-[24rem] w-full  bg-gray-50 p-1  shadow-sm"
-    >
+    <Link href={`/products/${product._id}`} className="h-[24rem] w-full">
       <div className="h-4/5 w-full overflow-hidden ">
         <Image
           width={300}
@@ -25,7 +22,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           alt={title}
         />
       </div>
-      <div className="mt-4">
+      <div className="mt-3">
         <h2 className="font-medium text-lg">{title}</h2>
         <PriceTag price={price} />
       </div>

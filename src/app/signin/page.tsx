@@ -1,7 +1,13 @@
 import SigninForm from "@/components/SigninForm";
 import SocialLogin from "@/components/SocialLogin";
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Sign in | Luxeon - Redefine your space",
+  description: "The sign in page",
+};
 
 const Signin = async ({
   searchParams,

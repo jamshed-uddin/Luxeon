@@ -7,9 +7,15 @@ import {
   EyeSlashIcon,
 } from "@heroicons/react/24/outline";
 import axios, { isAxiosError } from "axios";
+import { Metadata } from "next";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { FormEvent, useState } from "react";
+
+export const metadata: Metadata = {
+  title: "Reset password | Luxeon - Redefine your space",
+  description: "The reset password page",
+};
 
 const inputStyle =
   "border-[1.2px] text-sm   border-gray-600 placeholder:text-gray-600 rounded-lg  focus:outline focus:outline-1 focus:outline-black p-1.5 w-full box-border";

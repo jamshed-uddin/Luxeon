@@ -1,6 +1,12 @@
 import { ArrowRightIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Payment success | Luxeon - Redefine your space",
+  description: "The payment success page",
+};
 
 const PaymentSuccess = () => {
   return (

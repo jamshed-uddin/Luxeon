@@ -18,7 +18,7 @@ export const ProductDetailSkeleton = () => {
   return (
     <div className={"grid grid-cols-1 lg:grid-cols-7 gap-7 "}>
       <div
-        className={`${shimmer} lg:col-span-4 bg-gray-200 rounded-xl h-[70vh] lg:h-[calc(100vh-5rem)]`}
+        className={`${shimmer} lg:col-span-4 bg-gray-200 rounded-xl h-[60vh] lg:h-[calc(100vh-7rem)]`}
       ></div>
       <div className={` lg:col-span-3 space-y-3`}>
         <h2 className={`${shimmer} bg-gray-200 w-3/4 h-6`}></h2>

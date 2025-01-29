@@ -33,6 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   callbacks: {
     async signIn({ account, user }) {
+      console.log("user from signin callback", user);
       let userData;
       let authToken;
 
@@ -52,26 +53,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
           }
         }
-
-        try {
-          const { data: token } = await axios.post(
-            "http://localhost:4000/api/users/generateAuthToken",
-            { email: user?.email, name: user?.name }
-          );
-          authToken = token.authToken;
-
-          if (!userData) {
-            const { data: userInfo } = await axios.get(
-              `http://localhost:4000/api/users/${user.email}`
-            );
-
-            userData = userInfo;
-          }
-        } catch {
-          return false;
-        }
       }
 
+      try {
+        const { data: token } = await axios.post(
+          "http://localhost:4000/api/users/generateAuthToken",
+          { email: user?.email, name: user?.name }
+        );
+        authToken = token.authToken;
+
+        if (!userData) {
+          const { data: userInfo } = await axios.get(
+            `http://localhost:4000/api/users/${user.email}`
+          );
+
+          userData = userInfo;
+        }
+      } catch {
+        return false;
+      }
+
+      console.log("userdata from signin callback", userData);
       user._id = userData?._id;
       user.name = userData?.name;
       user.email = userData?.email;
@@ -106,13 +108,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null;
         }
       }
-
+      console.log("user from jwt callback", user);
       if (user) {
         token.user = user;
       }
       return token;
     },
     async session({ session, token }) {
+      console.log("token from session callback", token);
       if (token.user) {
         session.user = token.user as typeof session.user;
       }

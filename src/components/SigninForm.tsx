@@ -44,18 +44,18 @@ const SigninForm = () => {
       return setError("Password is required");
     }
     setPending(true);
+
     try {
       const res = await signInWithEmailAndPassword(formData);
       console.log("login page res", res);
       if (!res?.success) {
-        setPending(false);
         return setError(res?.message);
       }
       router.replace(callbackUrl || "/");
-      setPending(false);
     } catch (error) {
       console.log(error);
       setError("Something went wrong");
+    } finally {
       setPending(false);
     }
   };

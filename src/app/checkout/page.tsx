@@ -5,8 +5,14 @@ import PaymentElem from "@/components/checkout/PaymentElem";
 import { fetchCart } from "@/lib/cart";
 import { CartItem } from "@/lib/definition";
 import { ArrowRightIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Checkout | Luxeon - Redefine your space",
+  description: "The cart page",
+};
 
 const Checkout = async () => {
   const session = await auth();

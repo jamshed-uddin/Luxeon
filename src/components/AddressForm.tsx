@@ -48,7 +48,7 @@ const addressInputs: InputType[] = [
   },
   {
     name: "isDefault",
-    label: "Default address",
+    label: "Set as default address",
     placeholder: "Default address",
   },
 ];

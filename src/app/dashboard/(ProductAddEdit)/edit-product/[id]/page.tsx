@@ -5,8 +5,14 @@ import ProductForm from "@/components/dashboard/ProductForm";
 import { Product } from "@/lib/definition";
 import { getProductData } from "@/lib/getProductData";
 import axios from "axios";
+import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState, use, FormEvent } from "react";
+
+export const metadata: Metadata = {
+  title: "Edit product | Luxeon - Redefine your space",
+  description: "The edit product page",
+};
 
 const EditProduct = (props: { params: Promise<{ id: string }> }) => {
   const params = use(props.params);

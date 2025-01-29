@@ -1,6 +1,12 @@
 import { auth } from "@/auth";
 import ProfileNav from "@/components/dashboard/ProfileNav";
+import { Metadata } from "next";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Profile | Luxeon - Redefine your space",
+  description: "The user profile page",
+};
 
 const Profile = async ({
   children,

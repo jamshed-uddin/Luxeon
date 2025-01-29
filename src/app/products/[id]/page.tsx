@@ -1,29 +1,51 @@
+import ImageCarousel from "@/components/ImageCarousel";
 import PriceTag from "@/components/PriceTag";
 import AddToCartOrBuy from "@/components/products/AddToCartOrBuy";
 import ProductDescription from "@/components/products/ProductDescription";
+import ProductsList from "@/components/products/ProductsList";
+import SectionTitle from "@/components/SectionTitle";
 import { getProductData } from "@/lib/getProductData";
-import Image from "next/image";
+import { getProducts } from "@/lib/getProducts";
+import { Metadata } from "next";
 import React from "react";
 
-const ProductDetail = async (props: { params: Promise<{ id: string }> }) => {
-  const params = await props.params;
-  const { title, photoUrl, price, description, details, stock } =
-    await getProductData(params.id);
+interface ProductDetailProps {
+  params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: ProductDetailProps): Promise<Metadata> {
+  const { id } = await params;
+
+  const { title, photoUrl, description } = await getProductData(id);
+
+  return {
+    title,
+    description,
+    openGraph: {
+      images: [{ url: photoUrl[0].url }],
+    },
+  };
+}
+
+const ProductDetail = async (props: ProductDetailProps) => {
+  const { id } = await props.params;
+  const { title, photoUrl, price, description, details, stock, category } =
+    await getProductData(id);
+
+  const similarProducts = await getProducts(
+    `/products?category=${category}&limit=3`
+  );
+  console.log("similar products", similarProducts);
 
   return (
     <div className="my-container relative my-8">
       {/* product detail container */}
       <div className="grid grid-cols-1  lg:grid-cols-7 gap-10 ">
         {/*product image  */}
-        <div className="max-h-screen lg:min-h-[calc(100vh-6rem)] w-full col-span-1 lg:col-span-4">
-          <Image
-            height={400}
-            width={400}
-            src={photoUrl[0].url}
-            alt={title}
-            className="w-full h-full object-cover"
-            priority
-          />
+        <div className="max-h-screen h-[60vh] lg:h-[calc(100vh-7rem)] w-full col-span-1 lg:col-span-4">
+          <ImageCarousel images={photoUrl} />
         </div>
         {/* product title , price, add to cart btn */}
         <div className="lg:sticky top-14 right-0  lg:col-span-3  space-y-5 lg:space-y-8">
@@ -47,7 +69,7 @@ const ProductDetail = async (props: { params: Promise<{ id: string }> }) => {
               </div>
             )}
           </div>
-          <AddToCartOrBuy id={params.id} inStock={Number(stock) > 0} />
+          <AddToCartOrBuy id={id} inStock={Number(stock) > 0} />
         </div>
         <div className=" w-full lg:col-span-4  text-lg">
           {/* description */}
@@ -64,6 +86,15 @@ const ProductDetail = async (props: { params: Promise<{ id: string }> }) => {
               ))}
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* you may also like section */}
+
+      <div className="mt-16">
+        <SectionTitle>Similar products</SectionTitle>
+        <div>
+          <ProductsList products={similarProducts?.data} />
         </div>
       </div>
     </div>

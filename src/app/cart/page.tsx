@@ -8,6 +8,12 @@ import React from "react";
 import { cookies } from "next/headers";
 import { requestClient } from "@/lib/requestClient";
 import type { Cart } from "@/lib/definition";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Cart | Luxeon - Redefine your space",
+  description: "The cart page",
+};
 
 const Cart = async () => {
   const session = await auth();

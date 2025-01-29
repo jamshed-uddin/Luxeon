@@ -159,7 +159,7 @@ const PaymentElem = ({ cart }: { cart: Cart }) => {
             router.push(`/checkout?${params.toString()}`, { scroll: false });
           }}
         >
-          Proceed
+          Proceed to pay
         </Button>
       )}
       {proceedtocheckout ? (

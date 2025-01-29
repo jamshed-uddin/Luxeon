@@ -1,10 +1,21 @@
 import FilterAndSearch from "@/components/FilterAndSearch";
 import Pagination from "@/components/Pagination";
 import ProductCard from "@/components/products/ProductCard";
+import ProductsList from "@/components/products/ProductsList";
 
 import { getProducts } from "@/lib/getProducts";
+import { Metadata } from "next";
 
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Products | Luxeon - Redefine your space",
+  description:
+    "We create timeless, handcrafted furniture that brings sophistication and character to your home. Each piece is designed with passion,precision, and an eye for detail because your space deserves nothingless than perfection.",
+  openGraph: {
+    images: [{ url: "../../assets/luxeonheroimage.jpg" }],
+  },
+};
 
 const Products = async (props: {
   searchParams?: Promise<{
@@ -47,14 +58,10 @@ const Products = async (props: {
           <h2 className="text-center font-medium text-xl">No product found</h2>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-4">
-          {products?.data?.map((product) => (
-            <ProductCard product={product} key={product._id} />
-          ))}
-        </div>
+        <ProductsList products={products?.data} />
       )}
       {products?.pagination?.totalPages > 1 && (
-        <div className="w-1/3 lg:ml-auto lg:mx-0 mx-auto flex justify-center lg:justify-end py-5 ">
+        <div className="w-1/3 lg:ml-auto lg:mx-0 mx-auto flex justify-center lg:justify-end py-10 ">
           <Pagination totalPages={products?.pagination?.totalPages} />
         </div>
       )}

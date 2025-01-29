@@ -1,9 +1,15 @@
 import DeleteAccount from "@/components/DeleteAccount";
 import PasswordChange from "@/components/PasswordChange";
 import UserAddresses from "@/components/UserAddresses";
+import { Metadata } from "next";
 import React from "react";
 
-const Addresses = () => {
+export const metadata: Metadata = {
+  title: "Settings | Luxeon - Redefine your space",
+  description: "The cart page",
+};
+
+const Settings = () => {
   return (
     <div className="space-y-8 mb-10 ">
       <UserAddresses />
@@ -13,4 +19,4 @@ const Addresses = () => {
   );
 };
 
-export default Addresses;
+export default Settings;

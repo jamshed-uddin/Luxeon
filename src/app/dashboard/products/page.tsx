@@ -4,8 +4,14 @@ import Table from "@/components/dashboard/Table";
 import PriceTag from "@/components/PriceTag";
 import { Product } from "@/lib/definition";
 import { getProducts } from "@/lib/getProducts";
+import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Products | Luxeon - Redefine your space",
+  description: "The dashboard products page",
+};
 
 const AllProducts = async () => {
   const products = await getProducts(`/products`);

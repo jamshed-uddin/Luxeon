@@ -45,3 +45,11 @@ select {
     transform: scale(100%);
   }
 }
+
+.link-container:hover .link {
+  opacity: 0.4;
+}
+
+.link-container .link:hover {
+  opacity: 1;
+}

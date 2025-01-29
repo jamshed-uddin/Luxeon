@@ -1,6 +1,7 @@
+import { cache } from "react";
 import { Product } from "./definition";
 
-export const getProductData = async (id: string): Promise<Product> => {
+export const getProductData = cache(async (id: string): Promise<Product> => {
   try {
     const res = await fetch(`http://localhost:4000/api/products/${id}`);
 
@@ -13,4 +14,4 @@ export const getProductData = async (id: string): Promise<Product> => {
   } catch (error) {
     throw error;
   }
-};
+});

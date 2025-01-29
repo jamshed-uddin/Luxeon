@@ -4,8 +4,14 @@ import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import ProductForm from "@/components/dashboard/ProductForm";
 import { Product } from "@/lib/definition";
 import axios from "axios";
+import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
+
+export const metadata: Metadata = {
+  title: "Add product | Luxeon - Redefine your space",
+  description: "The add product page",
+};
 
 const AddProduct = () => {
   const [processing, setProcessing] = useState(false);

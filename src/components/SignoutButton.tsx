@@ -1,21 +1,18 @@
 "use client";
 
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import React, { FormEvent, useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 
 const SignoutButton = ({ className }: { className?: string }) => {
   const [pending, setPending] = useState(false);
-  const { update } = useSession();
 
   const signoutUser = async (e: FormEvent) => {
     e.preventDefault();
     setPending(true);
     signOut({ redirectTo: "/" });
     setPending(false);
-
-    // update();
   };
 
   return (

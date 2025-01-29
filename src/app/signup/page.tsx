@@ -1,6 +1,13 @@
 import SignupForm from "@/components/SignupForm";
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Sign up | Luxeon - Redefine your space",
+  description: "The sign up page",
+};
+
 const SignUp = () => {
   return (
     <div className="lg:w-1/4 mx-auto space-y-4   px-3 lg:px-0">
