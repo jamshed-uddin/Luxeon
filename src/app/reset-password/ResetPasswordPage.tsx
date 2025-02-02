@@ -55,7 +55,7 @@ const ResetPasswordPage = () => {
       });
 
       setIsReset(true);
-    } catch (error) {
+    } catch {
       setError("Something went wrong");
     } finally {
       setLoading(false);

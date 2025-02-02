@@ -31,7 +31,7 @@ const ForgotPasswordPage = () => {
         method: "post",
         data: { email },
       });
-    } catch (error) {
+    } catch {
       setError("Something went wrong");
     } finally {
       setEmail("");
