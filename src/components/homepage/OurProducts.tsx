@@ -6,7 +6,12 @@ import ProductsList from "../products/ProductsList";
 import SectionTitle from "../SectionTitle";
 
 const OurProducts = async () => {
-  const products = await getProducts(`/products?limit=6`);
+  let products;
+  try {
+    products = await getProducts(`/products?limit=6`);
+  } catch (error) {
+    throw error;
+  }
 
   return (
     <div className="my-container ">
