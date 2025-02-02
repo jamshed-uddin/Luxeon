@@ -1,5 +1,5 @@
 import React from "react";
-import luxeonChair from "../../assets/luxeonchair.jpg";
+import luxeonChair from "../../../public/assets/luxeonchair.jpg";
 
 import Image from "next/image";
 const AboutUs = () => {

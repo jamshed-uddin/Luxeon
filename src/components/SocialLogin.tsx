@@ -4,7 +4,7 @@ import { doSocialLogin } from "@/actions";
 
 import React from "react";
 import { useFormStatus } from "react-dom";
-import googleLogo from "@/assets/google.svg";
+import googleLogo from "../../public/assets/google.svg";
 import Image from "next/image";
 
 const SocialLoginButton = () => {

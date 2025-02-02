@@ -1,5 +1,5 @@
 import React from "react";
-import heroImage from "../../assets/luxeonheroimage.jpg";
+import heroImage from "../../../public/assets/luxeonheroimage.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
