@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description:
     "We create timeless, handcrafted furniture that brings sophistication and character to your home. Each piece is designed with passion,precision, and an eye for detail because your space deserves nothingless than perfection.",
   openGraph: {
-    images: [{ url: "../assets/luxeonheroimage.jpg" }],
+    images: [{ url: "../../public/assets/luxeonheroimage.jpg" }],
   },
 };
 
