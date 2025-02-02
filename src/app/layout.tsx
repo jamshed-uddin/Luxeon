@@ -7,6 +7,7 @@ import { jost } from "@/components/font";
 import CartProvider from "@/providers/CartProvider";
 import ToasterClient from "@/components/ToasterClient";
 import Footer from "@/components/Footer";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Luxeon - Redefine your space",
@@ -31,7 +32,9 @@ export default function RootLayout({
           >
             <ToasterClient />
             <Navbar />
-            <main className="mt-16 min-h-screen">{children}</main>
+            <main className="mt-16 min-h-screen">
+              <Suspense fallback={<div></div>}>{children}</Suspense>
+            </main>
             <Footer />
           </body>
         </CartProvider>
