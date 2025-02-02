@@ -58,7 +58,6 @@ const PaymentElem = ({ cart }: { cart: Cart }) => {
     address: seletedAddress,
   };
 
-  console.log("order", order);
   const {
     data: response,
     error: paymentIntentError,
@@ -87,11 +86,10 @@ const PaymentElem = ({ cart }: { cart: Cart }) => {
     ]
       .filter(Boolean)
       .join(", ");
-    console.log("address string", address);
+
     return string;
   };
 
-  console.log(userAddresses);
   return (
     <div>
       {isModalOpen && (

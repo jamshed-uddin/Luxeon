@@ -1,4 +1,4 @@
-import axios, { isAxiosError } from "axios";
+import { isAxiosError } from "axios";
 import NextAuth, { User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
@@ -16,11 +16,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google,
     Credentials({
       authorize: async (credentials) => {
-        const { data: user } = await axios.post(
-          "http://localhost:4000/api/users/login",
-          credentials
-        );
-        // console.log("auth ts response", user);
+        const user = await requestClient<User>("/users/login", {
+          method: "post",
+          data: credentials,
+        });
 
         if (!user) {
           return null;
@@ -33,8 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   callbacks: {
     async signIn({ account, user }) {
-      console.log("user from signin callback", user);
-      let userData;
+      let userData: User | undefined = undefined;
       let authToken;
 
       if (account?.provider === "google") {
@@ -47,7 +45,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           userData = data;
         } catch (error) {
           if (isAxiosError(error)) {
-            console.log(error.response);
             if (error.response?.status !== 309) {
               return false;
             }
@@ -56,16 +53,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       try {
-        const { data: token } = await axios.post(
-          "http://localhost:4000/api/users/generateAuthToken",
-          { email: user?.email, name: user?.name }
+        const token = await requestClient<{ authToken: string }>(
+          "/users/generateAuthToken",
+          {
+            method: "post",
+            data: { email: user?.email, name: user?.name },
+          }
         );
         authToken = token.authToken;
 
         if (!userData) {
-          const { data: userInfo } = await axios.get(
-            `http://localhost:4000/api/users/${user.email}`
-          );
+          const userInfo = await requestClient<User>(`/users/${user.email}`, {
+            method: "get",
+          });
 
           userData = userInfo;
         }
@@ -73,7 +73,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return false;
       }
 
-      console.log("userdata from signin callback", userData);
       user._id = userData?._id;
       user.name = userData?.name;
       user.email = userData?.email;
@@ -87,13 +86,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async jwt({ token, user, trigger, session }) {
       if (trigger === "update" && session.address.length) {
-        console.log("new addresses", session.address);
-        console.log("user from auth", user);
-
-        // user.address = session.address;
-
-        console.log("token", token, "address", (token.user as User).address);
-        console.log("session", session);
         try {
           const res = await requestClient<{ address: Address[] }>(
             `/users/${(token.user as User)._id}`,
@@ -102,20 +94,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               data: { address: session.address },
             }
           );
-          console.log(res.address);
+
           (token.user as User).address = res?.address;
         } catch {
           return null;
         }
       }
-      console.log("user from jwt callback", user);
+
       if (user) {
         token.user = user;
       }
       return token;
     },
     async session({ session, token }) {
-      console.log("token from session callback", token);
       if (token.user) {
         session.user = token.user as typeof session.user;
       }

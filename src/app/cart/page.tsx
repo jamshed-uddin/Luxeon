@@ -51,7 +51,7 @@ const Cart = async () => {
       ) : (
         <div className="flex flex-col lg:flex-row gap-4 mt-4 lg:mt-8 ">
           {/* cart items */}
-          <div className="w-full lg:w-[65%]">
+          <div className="w-full lg:w-[65%] space-y-3">
             {cart?.items?.map((item) => (
               <CartItemCard key={item._id} cartItem={item} placedIn="cart" />
             ))}

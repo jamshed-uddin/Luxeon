@@ -25,8 +25,6 @@ const SignupForm = () => {
   });
   const [pending, setPending] = useState<boolean>(false);
 
-  console.log(callbackUrl);
-
   const handleInputChange = () => {
     setError("");
   };
@@ -68,11 +66,10 @@ const SignupForm = () => {
       await userSignup(userData);
       await signInWithEmailAndPassword(userCredentials);
       router.replace(callbackUrl || "/");
-      setPending(false);
-    } catch (error) {
-      console.log(error);
-      setPending(false);
+    } catch {
       setError("Something went wrong");
+    } finally {
+      setPending(false);
     }
   };
 

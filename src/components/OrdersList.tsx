@@ -34,7 +34,7 @@ const OrdersList = ({ orders }: OrdersListProps) => {
     <div className="space-y-2">
       {orders?.map((order) => (
         <Link
-          href={`orders/${order._id}`}
+          href={`/orders/${order._id}`}
           key={order._id}
           className="border border-gray-300 px-2 py-4 rounded-xl space-y-2 block"
         >

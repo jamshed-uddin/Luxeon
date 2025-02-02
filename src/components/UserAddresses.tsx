@@ -46,14 +46,11 @@ const UserAddresses = () => {
     setOpenEditModal(false);
   };
 
-  console.log(data?.user.address);
-
   // updating an address
   const updateAddress = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = e.currentTarget;
     const addressData: Address = processAddressData(data);
-    console.log("update form data", addressData);
 
     const newAddressArr = addresses.map((address) =>
       address._id === addressData._id
@@ -64,15 +61,13 @@ const UserAddresses = () => {
           }
     );
 
-    console.log("updated addresses", newAddressArr);
-
     update({ address: newAddressArr });
     closeEditModal();
   };
 
   const deleteAnAddress = (id: string) => {
     const filteredAddress = addresses.filter((address) => address._id !== id);
-    console.log("filtered addresses", filteredAddress);
+
     update({ address: filteredAddress });
   };
 

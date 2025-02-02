@@ -4,20 +4,30 @@ import { doSocialLogin } from "@/actions";
 
 import React from "react";
 import { useFormStatus } from "react-dom";
+import googleLogo from "@/assets/google.svg";
+import Image from "next/image";
 
 const SocialLoginButton = () => {
   const { pending } = useFormStatus();
 
-  console.log("social login pending", pending);
   return (
     <button
-      className="border border-black rounded-xl p-2 disabled:opacity-70 disabled:cursor-wait"
+      className="disabled:opacity-70 disabled:cursor-wait  border border-black rounded-xl p-2 flex items-center gap-2"
       type="submit"
       name="action"
       value="google"
       disabled={pending}
     >
-      Google
+      <span className="w-6 h-6 block">
+        <Image
+          src={googleLogo}
+          alt="Google logo"
+          height={24}
+          width={24}
+          className="w-full h-full object-cover"
+        />
+      </span>{" "}
+      <span>Google</span>
     </button>
   );
 };

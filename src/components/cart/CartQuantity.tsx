@@ -44,8 +44,6 @@ const CartQuantity = ({ cartItemId, itemQuantity }: CartQuantityProps) => {
     }
   };
 
-  console.log(quantity);
-
   return (
     <div className="relative">
       <div

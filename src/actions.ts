@@ -27,8 +27,6 @@ export const signInWithEmailAndPassword = async (formData: FormData) => {
       message: "Signin successful",
     };
   } catch (error) {
-    console.log(error);
-
     if (error instanceof AuthError) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errMessage = (error as any)?.cause?.err?.response?.data?.message;

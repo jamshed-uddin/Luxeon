@@ -1,10 +1,5 @@
 "use client";
 
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-} from "@headlessui/react";
 import clsx from "clsx";
 import React, { useState } from "react";
 import SectionTitle from "../SectionTitle";

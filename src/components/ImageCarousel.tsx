@@ -7,7 +7,7 @@ import React, { useState } from "react";
 
 const ImageCarousel = ({ images }: { images: PhotoUrlObj[] }) => {
   const [photoIndex, setPhotoIndex] = useState(0);
-  console.log(images);
+
   return (
     <div className="h-full w-full overflow-hidden relative rounded-lg ">
       {images?.map((photoObj, index) => (

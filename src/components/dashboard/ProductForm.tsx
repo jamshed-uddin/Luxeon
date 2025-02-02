@@ -75,7 +75,6 @@ const ProductForm = ({
   ) => {
     const { name, value } = e.target;
 
-    console.log(name, value);
     setProductData((prev) => ({
       ...prev,
       details: prev?.details?.map((singleDetail, index) =>

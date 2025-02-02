@@ -7,7 +7,6 @@ import SectionTitle from "../SectionTitle";
 
 const OurProducts = async () => {
   const products = await getProducts(`/products?limit=6`);
-  console.log("product from our", products);
 
   return (
     <div className="my-container ">

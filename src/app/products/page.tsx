@@ -1,6 +1,6 @@
 import FilterAndSearch from "@/components/FilterAndSearch";
 import Pagination from "@/components/Pagination";
-import ProductCard from "@/components/products/ProductCard";
+
 import ProductsList from "@/components/products/ProductsList";
 
 import { getProducts } from "@/lib/getProducts";

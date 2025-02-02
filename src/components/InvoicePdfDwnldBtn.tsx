@@ -7,11 +7,14 @@ import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { Order } from "@/lib/definition";
 
 const PDFDownloadLink = dynamic(
-  () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+  () =>
+    import("@react-pdf/renderer").then((mod) => ({
+      default: mod.PDFDownloadLink,
+    })),
   {
     ssr: false,
     loading: () => (
-      <button className="px-3 py-1 rounded-xl border border-black w-44">
+      <button className="lg:px-3 lg:py-1 rounded-xl border border-black w-36 lg:w-40">
         ...
       </button>
     ),
@@ -38,7 +41,7 @@ const InvoicePdfDwnldBtn = ({
           borderRadius: 13,
         }}
       >
-        <button className="px-3 py-1 rounded-xl border border-black flex items-center gap-1 w-44">
+        <button className="px-3 py-1 rounded-xl border border-black flex items-center gap-1 w-fit text-xs lg:text-base">
           <ArrowDownTrayIcon className="w-4 inline" />{" "}
           <span>Download invoice</span>
         </button>

@@ -21,8 +21,6 @@ const Signin = async ({
     signupUrl = `/signup?callbackUrl=${params?.callbackUrl}`;
   }
 
-  console.log(params?.callbackUrl);
-
   return (
     <div className="lg:w-1/4 mx-auto  space-y-4 px-3 lg:px-0">
       <SigninForm />

@@ -31,9 +31,11 @@ const TopMetricsWidgets = () => {
       method: "get",
     });
 
-  const { data: metrics, isLoading } = useSWR("/dashboard/topMetrics", (url) =>
-    getMetrics(url)
-  );
+  const {
+    data: metrics,
+    isLoading,
+    error,
+  } = useSWR("/dashboard/topMetrics", (url) => getMetrics(url));
 
   if (isLoading) {
     return (
@@ -41,6 +43,10 @@ const TopMetricsWidgets = () => {
         <DashboardCardsSkeleton />
       </div>
     );
+  }
+
+  if (error) {
+    throw new Error("Something went wrong.");
   }
 
   return (
@@ -63,7 +69,7 @@ const TopMetricsWidgets = () => {
           tab === "This month"
             ? (metrics?.salesAndOrders?.thisMonth as Record<string, number>)
             : (metrics?.salesAndOrders?.thisYear as Record<string, number>)
-        ).map(([key, value]: [string, number]) => (
+        )?.map(([key, value]: [string, number]) => (
           <div key={key} className="h-28  shadow-md rounded-xl p-4">
             <h2 className="text-2xl font-medium">
               {(key === "totalRevenue" && "Total revenue") ||

@@ -16,7 +16,6 @@ const links = [
 
 const ProfileNav = () => {
   const pathname = usePathname();
-  console.log("profile path", pathname);
 
   return (
     <nav className="mt-4  text-xl flex items-center ">

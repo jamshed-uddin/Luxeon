@@ -17,7 +17,7 @@ const OurCategories = () => {
       <SectionTitle>Our categories</SectionTitle>
       <div className="mt-7">
         <div className="flex flex-wrap  link-container text-4xl  lg:text-6xl font-medium">
-          {categories.map((category, index) => (
+          {categories.map((category) => (
             <Link
               href={`/products?category=${category.value}`}
               key={category.value}

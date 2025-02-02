@@ -47,13 +47,12 @@ const SigninForm = () => {
 
     try {
       const res = await signInWithEmailAndPassword(formData);
-      console.log("login page res", res);
+
       if (!res?.success) {
         return setError(res?.message);
       }
       router.replace(callbackUrl || "/");
-    } catch (error) {
-      console.log(error);
+    } catch {
       setError("Something went wrong");
     } finally {
       setPending(false);

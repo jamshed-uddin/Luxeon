@@ -49,7 +49,7 @@ const InvoicePdf = ({ order }: { order: Order }) => {
         <View style={[{ marginBottom: "0.6in" }, styles.section]}>
           <Text style={{ marginBottom: 5 }}>{order?.user.name}</Text>
           <Text style={{ marginBottom: 5 }}>{order?.user.email}</Text>
-          <Text>{`Adress: ${[
+          <Text>{`Address: ${[
             order?.address?.addressLine,
             order?.address?.street,
             order?.address?.city &&

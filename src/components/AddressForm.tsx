@@ -64,7 +64,6 @@ const inputStyle =
 const labelStyle = " font-medium block mb-1";
 
 const AddressForm = ({ addressData, submitFunc }: AddressFormProps) => {
-  console.log("address data form", addressData);
   return (
     <form onSubmit={submitFunc}>
       <div className="space-y-3">

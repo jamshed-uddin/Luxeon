@@ -35,7 +35,6 @@ const ImageDropZone = ({ photoUrl, setProductData }: ImageDropZoneProps) => {
         photoUrls.push({ url, publicId: "" });
       });
 
-      console.log(photoUrls);
       setProductData((prev) => ({
         ...prev,
         photoUrl: [...prev.photoUrl, ...photoUrls],
@@ -43,12 +42,11 @@ const ImageDropZone = ({ photoUrl, setProductData }: ImageDropZoneProps) => {
 
       try {
         setUploading(true);
-        const { data } = await uploadImage(files);
+        const data = await uploadImage(files);
 
-        console.log(data?.urls);
         setProductData((prev) => ({
           ...prev,
-          photoUrl: data?.urls,
+          photoUrl: data,
         }));
       } catch (error) {
         setError((error as Error).message || "Something went wrong");

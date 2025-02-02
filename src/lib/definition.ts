@@ -54,6 +54,7 @@ export type User = {
   password: string;
   role: string;
   address: Address[];
+  authToken?: string;
   provider: string;
   createdAt?: Date;
   updatedAt?: Date;

@@ -1,8 +1,16 @@
+"use client";
+
 import React from "react";
 import { categories } from "./homepage/OurCategories";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/dashboard")) {
+    return null;
+  }
   return (
     <div className="mt-24 mb-2 lg:relative mx-3 lg:mx-0">
       <div className="lg:absolute lg:top-0 lg:left-0">

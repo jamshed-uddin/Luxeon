@@ -22,7 +22,7 @@ const OrderDetailComp = ({ order }: OrderDetailCompProps) => {
   return (
     <div className="mb-3 my-container">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-5  gap-2 lg:gap-0">
-        <h1 className="lg:text-2xl font-medium flex items-center gap-2">
+        <h1 className="text-sm lg:text-2xl font-medium flex items-center gap-2">
           <span>{`Order_${order?._id}`} </span>
           <OrderStatus status={order?.status} />
         </h1>
@@ -104,6 +104,7 @@ const OrderDetailComp = ({ order }: OrderDetailCompProps) => {
               <h2 className="text-sm">
                 <span className="font-light">Address: </span>{" "}
                 {[
+                  order?.address?.name,
                   order?.address?.addressLine,
                   order?.address?.street,
                   order?.address?.city &&

@@ -1,6 +1,6 @@
 import React from "react";
 import luxeonChair from "../../assets/luxeonchair.jpg";
-import luxeonLight from "../../assets/luxeonlight.jpg";
+
 import Image from "next/image";
 const AboutUs = () => {
   return (

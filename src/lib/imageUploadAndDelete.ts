@@ -1,4 +1,5 @@
-import axios from "axios";
+import { PhotoUrlObj } from "./definition";
+import { requestClient } from "./requestClient";
 
 export const uploadImage = async (files: File[]) => {
   const formData = new FormData();
@@ -8,17 +9,17 @@ export const uploadImage = async (files: File[]) => {
     });
   }
 
-  return await axios.post(
-    "http://localhost:4000/api/products/image/uploadImage",
-    formData,
-    { headers: { "Content-Type": "multipart/form-data" } }
-  );
+  return await requestClient<PhotoUrlObj[]>("/products/image/uploadImage", {
+    method: "post",
+    data: formData,
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 };
 
 export const deleteImage = async (publicIds: string[]) => {
   //   const encodedPublicId = encodeURIComponent(publicId);
-  return await axios.post(
-    `http://localhost:4000/api/products/image/deleteImage`,
-    { publicIds }
-  );
+  return await requestClient(`/products/image/deleteImage`, {
+    method: "post",
+    data: { publicIds },
+  });
 };

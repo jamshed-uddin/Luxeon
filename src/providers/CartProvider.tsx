@@ -3,7 +3,6 @@
 import { fetchCart } from "@/lib/cart";
 import { Cart } from "@/lib/definition";
 import { requestClient } from "@/lib/requestClient";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import React, { createContext, useContext, useEffect } from "react";
 import useSWR, { SWRResponse } from "swr";
@@ -37,6 +36,14 @@ const CartProvider = ({
 }): React.ReactNode => {
   const { data, status } = useSession();
 
+  useEffect(() => {
+    if (!data) return;
+    requestClient(`/cart/merge`, {
+      method: "post",
+      data: { userId: data?.user?._id },
+    });
+  }, [data]);
+
   const key =
     status === "loading"
       ? null
@@ -49,14 +56,6 @@ const CartProvider = ({
     fetchCart
   );
 
-  useEffect(() => {
-    if (!data) return;
-    requestClient(`/cart/merge`, {
-      method: "post",
-      data: { userId: data?.user?._id },
-    });
-  }, [data]);
-
   const addToCart = async ({
     productId,
     quantity,
@@ -67,17 +66,16 @@ const CartProvider = ({
     userId: string;
   }): Promise<Cart> => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/cart",
-        {
+      const data = await requestClient<Cart>("/cart", {
+        method: "post",
+        data: {
           productId,
           quantity,
           userId,
         },
-        { withCredentials: true }
-      );
+      });
       cart.mutate();
-      return response.data;
+      return data;
     } catch {
       throw new Error("Failed to add to cart.");
     }
@@ -90,8 +88,9 @@ const CartProvider = ({
     quantity: number;
   }) => {
     try {
-      await axios.patch(`http://localhost:4000/api/cart/${cartItemId}`, {
-        quantity,
+      await requestClient(`/cart/${cartItemId}`, {
+        method: "patch",
+        data: { quantity },
       });
       cart.mutate();
     } catch (error) {

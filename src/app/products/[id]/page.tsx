@@ -37,7 +37,6 @@ const ProductDetail = async (props: ProductDetailProps) => {
   const similarProducts = await getProducts(
     `/products?category=${category}&limit=3`
   );
-  console.log("similar products", similarProducts);
 
   return (
     <div className="my-container relative my-8">

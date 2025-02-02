@@ -15,7 +15,6 @@ const OrderDetails = async ({
   params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
-  console.log(id);
 
   const order = await requestClient<Order>(`/orders/${id}`, {
     method: "get",

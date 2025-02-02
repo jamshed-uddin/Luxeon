@@ -22,7 +22,7 @@ const links = [
   { name: "Orders", href: "/dashboard/orders", icon: ShoppingBagIcon },
 ];
 
-const NavLinks = () => {
+const NavLinks = ({ toggleMenu }: { toggleMenu: () => void }) => {
   const pathname = usePathname();
 
   return (
@@ -33,8 +33,9 @@ const NavLinks = () => {
           <Link
             key={link.name}
             href={link.href}
+            onClick={toggleMenu}
             className={clsx(
-              "flex h-[48px] grow items-center justify-center gap-2    text-sm font-medium  hover:text-blue-600 lg:flex-none lg:justify-start ",
+              " h-[48px]      text-sm font-medium  hover:text-blue-600  flex  items-center gap-2 ",
               {
                 " text-blue-600": pathname === link.href,
               }
@@ -42,7 +43,7 @@ const NavLinks = () => {
             shallow
           >
             <LinkIcon className="w-6" />
-            <p className="hidden md:block">{link.name}</p>
+            <p className="">{link.name}</p>
           </Link>
         );
       })}

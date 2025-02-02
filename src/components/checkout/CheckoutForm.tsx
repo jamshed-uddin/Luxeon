@@ -22,22 +22,19 @@ const CheckoutForm = () => {
     if (!stripe || !elements) return;
 
     setIsLoading(true);
-    const { paymentIntent, error } = await stripe.confirmPayment({
+    const { error } = await stripe.confirmPayment({
       elements,
       redirect: "if_required",
     });
 
     if (error) {
       if (error?.type === "card_error" || error?.type === "validation_error") {
-        console.log(error);
         setError(error.message as string);
       } else {
         setError("An unexpected error occured.");
       }
       setIsLoading(false);
     }
-
-    console.log(paymentIntent);
 
     router.push("/payment-success");
     setIsLoading(false);

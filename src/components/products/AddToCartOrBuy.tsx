@@ -16,12 +16,11 @@ const AddToCartOrBuy = ({ id, inStock }: { id: string; inStock: boolean }) => {
   const handleAddToCart = async () => {
     try {
       setLoading(true);
-      const res = await addToCart({
+      await addToCart({
         productId: id,
         quantity,
         userId: session?.data?.user._id as string,
       });
-      console.log(res);
 
       toast.success("Product added to cart");
     } catch (error) {
