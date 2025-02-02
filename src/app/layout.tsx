@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://luxeon.vercel.app"),
   title: "Luxeon - Redefine your space",
   description:
     "We create timeless, handcrafted furniture that brings sophistication and character to your home. Each piece is designed with passion,precision, and an eye for detail because your space deserves nothingless than perfection.",
