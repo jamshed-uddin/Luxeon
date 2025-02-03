@@ -51,7 +51,10 @@ const ResetPasswordPage = () => {
       //api calls
       await requestClient("/users/resetPassword", {
         method: "put",
-        data: { passwordResetToken: resetToken, newPassword: password },
+        body: JSON.stringify({
+          passwordResetToken: resetToken,
+          newPassword: password,
+        }),
       });
 
       setIsReset(true);

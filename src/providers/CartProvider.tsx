@@ -40,7 +40,7 @@ const CartProvider = ({
     if (!data) return;
     requestClient(`/cart/merge`, {
       method: "post",
-      data: { userId: data?.user?._id },
+      body: JSON.stringify({ userId: data?.user?._id }),
     });
   }, [data]);
 
@@ -68,11 +68,11 @@ const CartProvider = ({
     try {
       const data = await requestClient<Cart>("/cart", {
         method: "post",
-        data: {
+        body: JSON.stringify({
           productId,
           quantity,
           userId,
-        },
+        }),
       });
       cart.mutate();
       return data;
@@ -90,7 +90,7 @@ const CartProvider = ({
     try {
       await requestClient(`/cart/${cartItemId}`, {
         method: "patch",
-        data: { quantity },
+        body: JSON.stringify({ quantity }),
       });
       cart.mutate();
     } catch (error) {

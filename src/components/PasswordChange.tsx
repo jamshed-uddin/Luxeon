@@ -77,11 +77,11 @@ const PasswordChange = () => {
     try {
       await requestClient("/users/changePassword", {
         method: "put",
-        data: {
+        body: JSON.stringify({
           userEmail: data?.user.email,
           currentPassword: password.currentPassword,
           newPassword: password.newPassword,
-        },
+        }),
       });
       setPassword({
         currentPassword: "",

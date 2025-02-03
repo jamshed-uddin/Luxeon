@@ -24,7 +24,10 @@ const AddProductPage = () => {
     e.preventDefault();
     try {
       setProcessing(true);
-      await requestClient("/products", { method: "post", data: productInfo });
+      await requestClient("/products", {
+        method: "post",
+        body: JSON.stringify(productInfo),
+      });
 
       router.back();
       setProcessing(false);

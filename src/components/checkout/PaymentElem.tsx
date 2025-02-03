@@ -69,10 +69,10 @@ const PaymentElem = ({ cart }: { cart: Cart }) => {
     async (url: string) =>
       await requestClient<PaymentSecretType>(url, {
         method: "post",
-        data: {
+        body: JSON.stringify({
           amount: cart.subtotal,
           data: { cartId: cart?._id, ...order },
-        },
+        }),
       })
   );
 

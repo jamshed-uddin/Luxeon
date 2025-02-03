@@ -18,7 +18,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async (credentials) => {
         const user = await requestClient<User>("/users/login", {
           method: "post",
-          data: credentials,
+          body: JSON.stringify(credentials),
         });
 
         if (!user) {
@@ -58,7 +58,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           "/users/generateAuthToken",
           {
             method: "post",
-            data: { email: user?.email, name: user?.name },
+            body: JSON.stringify({ email: user?.email, name: user?.name }),
           }
         );
         authToken = token.authToken;
@@ -92,7 +92,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             `/users/${(token.user as User)._id}`,
             {
               method: "patch",
-              data: { address: session.address },
+              body: JSON.stringify({ address: session.address }),
             }
           );
 

@@ -11,7 +11,7 @@ export const uploadImage = async (files: File[]) => {
 
   return await requestClient<PhotoUrlObj[]>("/products/image/uploadImage", {
     method: "post",
-    data: formData,
+    body: formData,
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
@@ -20,6 +20,6 @@ export const deleteImage = async (publicIds: string[]) => {
   //   const encodedPublicId = encodeURIComponent(publicId);
   return await requestClient(`/products/image/deleteImage`, {
     method: "post",
-    data: { publicIds },
+    body: JSON.stringify({ publicIds }),
   });
 };

@@ -29,7 +29,7 @@ const ForgotPasswordPage = () => {
       //api call
       await requestClient("/users/resetPasswordEmailRequest", {
         method: "post",
-        data: { email },
+        body: JSON.stringify({ email }),
       });
     } catch {
       setError("Something went wrong");

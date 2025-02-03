@@ -29,7 +29,7 @@ const DeleteAccount = () => {
       setLoading(true);
       await requestClient(`/users/${session?.user._id}`, {
         method: "delete",
-        data: { password: currentPassword },
+        body: JSON.stringify({ password: currentPassword }),
       });
       signOut({ redirectTo: "/" });
     } catch {

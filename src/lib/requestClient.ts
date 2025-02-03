@@ -1,32 +1,37 @@
-import { AxiosError } from "axios";
-
 export const requestClient = async <T>(
   url: string,
-  options: RequestInit
+  options: RequestInit = {}
 ): Promise<T> => {
   const serverBaseUrl = process.env.NEXT_PUBLIC_SERVER_BASE_URL as string;
-
   const apiUrl = `${serverBaseUrl}${url}`;
 
   try {
-    // const response = await axios({
-    //   url: apiUrl,
-    //   withCredentials: true,
-    //   ...options,
-    // });
-
     const response = await fetch(apiUrl, {
       ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...(options.headers || {}),
+      },
+      credentials: "include", // Ensures cookies are sent with requests if needed
     });
 
-    const data = await response.json();
-    return data as T;
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      throw error?.response?.data;
-    } else {
-      throw error;
-      // throw new Error("Something went wrong");
+    // Handle HTTP errors (e.g., 4xx, 5xx)
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({})); // Handle cases where response is not JSON
+      throw new Error(
+        `HTTP Error ${response.status}: ${
+          errorData.message || response.statusText
+        }`
+      );
     }
+
+    // Return JSON response
+    return (await response.json()) as T;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Request Error:", error.message);
+      throw error;
+    }
+    throw new Error("An unexpected error occurred");
   }
 };
