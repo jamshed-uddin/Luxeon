@@ -8,7 +8,8 @@ export const getProducts = async (url: string) => {
     });
 
     return response;
-  } catch {
-    throw new Error("Something went wrong");
+  } catch (error) {
+    throw error;
+    // throw new Error("Something went wrong");
   }
 };

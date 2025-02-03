@@ -19,7 +19,8 @@ export const requestClient = async <T>(
     if (error instanceof AxiosError) {
       throw error?.response?.data;
     } else {
-      throw new Error("Something went wrong");
+      throw error;
+      // throw new Error("Something went wrong");
     }
   }
 };
