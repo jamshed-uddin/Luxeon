@@ -13,6 +13,7 @@ export default function Error({
   return (
     <div>
       <h2>{error?.message}</h2>
+      <h4>{error?.digest}</h4>
       <ErrorElement reset={reset} />
     </div>
   );
