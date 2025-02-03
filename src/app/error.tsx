@@ -10,5 +10,10 @@ export default function Error({
   reset: () => void;
 }) {
   console.log(error);
-  return <ErrorElement reset={reset} />;
+  return (
+    <div>
+      <h2>{error?.message}</h2>
+      <ErrorElement reset={reset} />
+    </div>
+  );
 }
