@@ -91,7 +91,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const res = await requestClient<{ address: Address[] }>(
             `/users/${(token.user as User)._id}`,
             {
-              method: "patch",
+              method: "put",
               body: JSON.stringify({ address: session.address }),
             }
           );

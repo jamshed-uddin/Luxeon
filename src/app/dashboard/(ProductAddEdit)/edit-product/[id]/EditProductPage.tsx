@@ -41,7 +41,7 @@ const EditProductPage = () => {
     try {
       setProcessing(true);
       await requestClient(`/products/${params.id}`, {
-        method: "patch",
+        method: "put",
         body: JSON.stringify(productData),
       });
 

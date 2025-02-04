@@ -89,7 +89,7 @@ const CartProvider = ({
   }) => {
     try {
       await requestClient(`/cart/${cartItemId}`, {
-        method: "patch",
+        method: "put",
         body: JSON.stringify({ quantity }),
       });
       cart.mutate();
