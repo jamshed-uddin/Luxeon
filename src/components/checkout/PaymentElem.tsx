@@ -63,7 +63,7 @@ const PaymentElem = ({ cart }: { cart: Cart }) => {
     error: paymentIntentError,
     isLoading,
   } = useSWR(
-    status === "loading" || !proceedtocheckout
+    status === "loading" || !proceedtocheckout || !stripePromise
       ? null
       : "/payments/createPaymentIntent",
     async (url: string) =>
