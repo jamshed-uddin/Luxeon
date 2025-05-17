@@ -19,6 +19,8 @@ const DeleteAccount = () => {
     setOpenModal(false);
   };
 
+  console.log("session from delete account", session);
+
   const openModalHandler = () => {
     setOpenModal(true);
   };

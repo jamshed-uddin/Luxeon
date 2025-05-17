@@ -17,7 +17,7 @@ export const requestClient = async <T>(
 
     // Handle HTTP errors (e.g., 4xx, 5xx)
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({})); // Handle cases where response is not JSON
+      const errorData = await response.json().catch(() => ({}));
       throw new Error(
         `HTTP Error ${response.status}: ${
           errorData.message || response.statusText

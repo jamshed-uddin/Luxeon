@@ -60,7 +60,7 @@ const SigninForm = () => {
   };
 
   return (
-    <form onSubmit={submitForm} className="space-y-3 ">
+    <form onSubmit={submitForm} className="space-y-3" data-testid="signin-form">
       <div>
         <label className={labelStyle} htmlFor="email">
           {" "}

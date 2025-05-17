@@ -15,6 +15,8 @@ const Profile = async ({
 }>) => {
   const session = await auth();
 
+  console.log("hello", session);
+
   return (
     <div className="my-container">
       <h2 className="text-xl lg:text-2xl font-medium">

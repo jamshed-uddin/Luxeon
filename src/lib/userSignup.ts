@@ -6,5 +6,8 @@ export const userSignup = async (userData: {
   provider: string;
   password?: string | null | undefined;
 }) => {
-  return await axios.post("http://localhost:4000/api/users", userData);
+  return await axios.post(
+    `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/users`,
+    userData
+  );
 };

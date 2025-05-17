@@ -13,6 +13,7 @@ const Hero = () => {
           height={500}
           width={500}
           className="h-full w-full object-cover"
+          priority={true}
         />
       </div>
 
