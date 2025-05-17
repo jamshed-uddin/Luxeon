@@ -39,13 +39,17 @@ const AddToCartOrBuy = ({ id, inStock }: { id: string; inStock: boolean }) => {
             disabled={quantity === 1}
             className="flex-grow"
             onClick={() => setQuantity((p) => p - 1)}
+            data-testid="decrement-btn"
           >
             <MinusIcon className="w-5 h-5" />
           </button>
-          <span className="flex-grow text-xl">{quantity}</span>
+          <span className="flex-grow text-xl" data-testid="quantity">
+            {quantity}
+          </span>
           <button
             className="flex-grow"
             onClick={() => setQuantity((p) => p + 1)}
+            data-testid="increment-btn"
           >
             {" "}
             <PlusIcon className="w-5 h-5" />
