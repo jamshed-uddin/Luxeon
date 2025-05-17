@@ -17,7 +17,11 @@ const PriceTag = ({ price, className }: PriceTagProps) => {
     return null;
   }
 
-  return <span className={className}>{format()}</span>;
+  return (
+    <span className={className} data-testid="price-tag">
+      {format()}
+    </span>
+  );
 };
 
 export default PriceTag;
